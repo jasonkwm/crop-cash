@@ -9,6 +9,7 @@ import { WalletServicesPlugin } from "@web3auth/wallet-services-plugin";
 import { shouldSupportPasskey } from "../utils";
 import { AuthUserInfo } from "@web3auth/auth";
 import { ethers } from "ethers";
+import { createPaymaster, createSmartAccountClient, IPaymaster } from "@biconomy/account";
 
 const clientId = "BMOtGZg6Gtzh3MbWIgs8EJzl5Ig-tSFaPkULxG3HKm2jpUVVrH4HudSraHzHl73dm64WJ3qiowXvW_0xoinv8wM";
 const verifier = "banana-google";
@@ -65,6 +66,8 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
   const [userAccount, setUserAccount] = useState<string>("");
   const [userBalance, setUserBalance] = useState<string>("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [smartWallet, setSmartWallet] = useState<any>(null);
+  const [smartWalletAddress, setSmartWalletAddress] = useState("");
 
   useEffect(() => {
     const init = async () => {
@@ -96,10 +99,16 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
           console.log("sfa:connected", data);
           console.log("sfa:state", web3authSfa?.state);
           setProvider(web3authSfa.provider);
+          postLoginFlow(web3authSfa, web3authSfa.provider);
         });
         web3authSfa.on(ADAPTER_EVENTS.DISCONNECTED, () => {
           console.log("sfa:disconnected");
           setProvider(null);
+          setUserInfo(null);
+          setUserAccount("");
+          setUserBalance("");
+          setSmartWallet(null);
+          setSmartWalletAddress("");
         });
         await web3authSfa.init();
         setWeb3authSFAuth(web3authSfa);
@@ -124,26 +133,13 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
         return;
       }
       const { payload } = decodeToken(idToken);
+      console.log("before payload");
       await web3authSFAuth.connect({
         verifier,
         verifierId: (payload as any)?.email,
         idToken: idToken!,
       });
       setIsLoggingIn(false);
-      if (!web3authSFAuth) {
-        return "Web3Auth Single Factor Auth SDK not initialized yet";
-      }
-      const getUserInfo = await web3authSFAuth.getUserInfo();
-      setUserInfo(getUserInfo);
-      if (!provider) {
-        return "No provider found";
-      }
-      const rpc = new RPC(provider);
-      const acc = await rpc.getAccounts();
-      const balance = await rpc.getBalance();
-
-      setUserAccount(acc);
-      setUserBalance(balance);
       return "Login Sucessful";
     } catch (err) {
       // Single Factor Auth SDK throws an error if the user has already enabled MFA
@@ -173,7 +169,11 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
     if (!web3authSFAuth) {
       return "Web3Auth Single Factor Auth SDK not initialized yet";
     }
-    googleLogout();
+    try {
+      googleLogout();
+    } catch (e: any) {
+      console.log(e.message);
+    }
     web3authSFAuth.logout();
     return "Logout sucessful";
   };
@@ -215,40 +215,55 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
     return res;
   };
 
-  // const postLoginFlow = async (provider: IProvider | null) => {
-  //   const biconomyConfig = {
-  //     biconomyPaymasterApiKey: import.meta.env.VITE_BICONOMY_PAYMASTER_API_KEY,
-  //     bundleUrl: `https://bundler.biconomy.io/api/v3/534351/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44`,
-  //   };
+  const postLoginFlow = async (web3AuthSfaParam: any, provider: IProvider | null) => {
+    console.log("here");
+    if (!web3AuthSfaParam) {
+      return "Web3Auth Single Factor Auth SDK not initialized yet";
+    }
+    if (!provider) {
+      return "No provider found";
+    }
 
-  //   if (web3authSFAuth && web3authSFAuth?.connected && provider) {
-  //     const user = await web3authSFAuth.getUserInfo();
-  //     const rpc = new RPC(provider);
-  //     const address = await rpc.getAccounts();
+    const getUserInfo = await web3AuthSfaParam.getUserInfo();
+    const rpc = new RPC(provider);
+    const acc = await rpc.getAccounts();
+    const balance = await rpc.getBalance();
 
-  //     const ethersProvider = new ethers.BrowserProvider(provider as IProvider);
-  //     setWeb3AuthSigner(ethersProvider.getSigner());
+    setUserInfo(getUserInfo);
+    setUserAccount(acc);
+    setUserBalance(balance);
+    const biconomyConfig = {
+      biconomyPaymasterApiKey: import.meta.env.VITE_BICONOMY_PAYMASTER_API_KEY,
+      bundleUrl: `https://bundler.biconomy.io/api/v3/534351/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44`,
+    };
+    if (web3AuthSfaParam && web3AuthSfaParam?.connected && provider) {
+      const ethersProvider = new ethers.BrowserProvider(provider as IProvider);
 
-  //     const paymaster: IPaymaster = await createPaymaster({
-  //       paymasterUrl: `https://paymaster.biconomy.io/api/v1/84532/${biconomyConfig.biconomyPaymasterApiKey}`,
-  //       strictMode: false,
-  //     });
+      const paymaster: IPaymaster = await createPaymaster({
+        paymasterUrl: `https://paymaster.biconomy.io/api/v1/534351/${biconomyConfig.biconomyPaymasterApiKey}`,
+        strictMode: false,
+      });
+      const sw = await createSmartAccountClient({
+        signer: (await ethersProvider.getSigner()) as any,
+        biconomyPaymasterApiKey: biconomyConfig.biconomyPaymasterApiKey,
+        // paymasterUrl: `https://paymaster.biconomy.io/api/v1/84532/${biconomyConfig.biconomyPaymasterApiKey}`,
+        bundlerUrl: biconomyConfig.bundleUrl,
+        paymaster: paymaster,
+        rpcUrl: "https://sepolia.scrollscan.com/",
+        chainId: 534351,
+      });
 
-  //     const sw = await createSmartAccountClient({
-  //       signer: ethersProvider.getSigner(),
-  //       biconomyPaymasterApiKey: biconomyConfig.biconomyPaymasterApiKey,
-  //       // paymasterUrl: `https://paymaster.biconomy.io/api/v1/84532/${biconomyConfig.biconomyPaymasterApiKey}`,
-  //       bundlerUrl: biconomyConfig.bundleUrl,
-  //       paymaster: paymaster,
-  //       rpcUrl: "https://base-sepolia-rpc.publicnode.com",
-  //       chainId: 84532,
-  //     });
+      const swAddress = await sw.getAccountAddress();
+      setSmartWallet(sw);
+      setSmartWalletAddress(swAddress);
+    }
+  };
 
-  //     setSmartWallet(sw);
-
-  //     const swAddress = await sw.getAccountAddress();
-  //   }
-  // };
+  useEffect(() => {
+    if (provider && web3authSFAuth) {
+      postLoginFlow(web3authSFAuth, provider);
+    }
+  }, [provider, web3authSFAuth]);
   return (
     <Web3AuthContext.Provider
       value={{
@@ -268,6 +283,11 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
         isLoggingIn,
         setIsLoggingIn,
         listAllPasskeys,
+        smartWallet,
+        setSmartWallet,
+        smartWalletAddress,
+        setSmartWalletAddress,
+        wsPlugin,
       }}
     >
       {children}
