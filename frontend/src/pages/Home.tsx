@@ -24,10 +24,6 @@ export default function Home() {
           </button>
         </div>
       </div>
-
-      <div id="console" style={{ whiteSpace: "pre-line" }}>
-        <p style={{ whiteSpace: "pre-line" }}></p>
-      </div>
     </>
   );
   return <>{loginView}</>;
