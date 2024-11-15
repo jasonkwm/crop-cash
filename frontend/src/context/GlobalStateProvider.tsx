@@ -1,20 +1,24 @@
 import { createContext, useContext, useState } from "react";
 
-type GlobalProviderType = {
-  employee: any;
-  setEmployee: (value: any) => void;
-};
+// type GlobalProviderType = {
+//   employee: any;
+//   setEmployee: (value: any) => void;
+// };
 
-const GlobalState = createContext<GlobalProviderType | undefined>(undefined);
+const GlobalState = createContext<any>(undefined);
 
 export const GlobalStateProvider = ({ children }: { children: any }) => {
-  const [employee, setEmployee] = useState([]);
+  const [isSwitchOn, setIsSwitchOn] = useState(true);
+  const toggleSwitch = () => {
+    setIsSwitchOn(!isSwitchOn);
+  };
 
   return (
     <GlobalState.Provider
       value={{
-        employee,
-        setEmployee,
+        isSwitchOn,
+        setIsSwitchOn,
+        toggleSwitch,
       }}
     >
       {children}
