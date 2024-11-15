@@ -7,6 +7,7 @@ import { CredentialResponse, googleLogout } from "@react-oauth/google";
 import { PasskeysPlugin } from "@web3auth/passkeys-sfa-plugin";
 import { WalletServicesPlugin } from "@web3auth/wallet-services-plugin";
 import { shouldSupportPasskey } from "../utils";
+import { AuthUserInfo } from "@web3auth/auth";
 
 const clientId = "BMOtGZg6Gtzh3MbWIgs8EJzl5Ig-tSFaPkULxG3HKm2jpUVVrH4HudSraHzHl73dm64WJ3qiowXvW_0xoinv8wM";
 const verifier = "banana-google";
@@ -44,14 +45,13 @@ type Web3AuthProvider = {
   setWsPlugin: any;
   isLoggingIn: any;
   setIsLoggingIn: any;
+  userInfo: any;
+  setUserInfo: any;
+  userAccount: any;
+  setUserAccount: any;
+  userBalance: any;
+  setUserBalance: any;
 };
-
-function uiConsole(...args: any[]): void {
-  const el = document.querySelector("#console>p");
-  if (el) {
-    el.innerHTML = JSON.stringify(args || {}, null, 2);
-  }
-}
 
 const Web3AuthContext = createContext<any>(undefined);
 
@@ -60,6 +60,9 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
   const [provider, setProvider] = useState<IProvider | null>(null);
   const [pkPlugin, setPkPlugin] = useState<PasskeysPlugin | null>(null);
   const [wsPlugin, setWsPlugin] = useState<WalletServicesPlugin | null>(null);
+  const [userInfo, setUserInfo] = useState<AuthUserInfo | null>(null);
+  const [userAccount, setUserAccount] = useState<string>("");
+  const [userBalance, setUserBalance] = useState<string>("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   useEffect(() => {
@@ -99,7 +102,6 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
         });
         await web3authSfa.init();
         setWeb3authSFAuth(web3authSfa);
-        // (window as any).web3auth = web3authSfa;
       } catch (error) {
         console.error(error);
       }
@@ -111,8 +113,7 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
   const onSuccess = async (response: CredentialResponse) => {
     try {
       if (!web3authSFAuth) {
-        uiConsole("Web3Auth Single Factor Auth SDK not initialized yet");
-        return;
+        return "Web3Auth Single Factor Auth SDK not initialized yet";
       }
       setIsLoggingIn(true);
       const idToken = response.credential;
@@ -128,6 +129,21 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
         idToken: idToken!,
       });
       setIsLoggingIn(false);
+      if (!web3authSFAuth) {
+        return "Web3Auth Single Factor Auth SDK not initialized yet";
+      }
+      const getUserInfo = await web3authSFAuth.getUserInfo();
+      setUserInfo(getUserInfo);
+      if (!provider) {
+        return "No provider found";
+      }
+      const rpc = new RPC(provider);
+      const acc = await rpc.getAccounts();
+      const balance = await rpc.getBalance();
+
+      setUserAccount(acc);
+      setUserBalance(balance);
+      return "Login Sucessful";
     } catch (err) {
       // Single Factor Auth SDK throws an error if the user has already enabled MFA
       // One can use the Web3AuthNoModal SDK to handle this case
@@ -135,109 +151,87 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
       console.error(err);
     }
   };
-
   const loginWithPasskey = async () => {
     try {
       setIsLoggingIn(true);
       if (!pkPlugin) throw new Error("Passkey plugin not initialized");
       const result = shouldSupportPasskey();
       if (!result.isBrowserSupported) {
-        uiConsole("Browser not supported");
-        return;
+        return "Browser not supported";
       }
       await pkPlugin.loginWithPasskey();
-      uiConsole("Passkey logged in successfully");
+      return "Passkey logged in successfully";
     } catch (error) {
-      console.error((error as Error).message);
-      uiConsole((error as Error).message);
+      return (error as Error).message;
     } finally {
       setIsLoggingIn(false);
     }
   };
 
-  const getUserInfo = async () => {
-    if (!web3authSFAuth) {
-      uiConsole("Web3Auth Single Factor Auth SDK not initialized yet");
-      return;
-    }
-    const getUserInfo = await web3authSFAuth.getUserInfo();
-    uiConsole(getUserInfo);
-  };
-
   const logout = async () => {
     if (!web3authSFAuth) {
-      uiConsole("Web3Auth Single Factor Auth SDK not initialized yet");
-      return;
+      return "Web3Auth Single Factor Auth SDK not initialized yet";
     }
     googleLogout();
     web3authSFAuth.logout();
-    return;
+    return "Logout sucessful";
   };
 
-  const getAccounts = async () => {
-    if (!provider) {
-      uiConsole("No provider found");
-      return;
-    }
-    const rpc = new RPC(provider);
-    const userAccount = await rpc.getAccounts();
-    uiConsole(userAccount);
-  };
-
-  const getBalance = async () => {
-    if (!provider) {
-      uiConsole("No provider found");
-      return;
-    }
-    const rpc = new RPC(provider);
-    const balance = await rpc.getBalance();
-    uiConsole(balance);
-  };
   const authenticateUser = async () => {
     if (!web3authSFAuth) {
-      uiConsole("Web3Auth Single Factor Auth SDK not initialized yet");
-      return;
+      return "Web3Auth Single Factor Auth SDK not initialized yet";
     }
     try {
       const userCredential = await web3authSFAuth.authenticateUser();
-      uiConsole(userCredential);
-    } catch (err) {
-      uiConsole(err);
+      return userCredential;
+    } catch (err: any) {
+      return err.message;
     }
   };
   const registerPasskey = async () => {
     try {
       if (!pkPlugin || !web3authSFAuth) {
-        uiConsole("plugin not initialized yet");
-        return;
+        return "plugin not initialized yet";
       }
       const result = shouldSupportPasskey();
       if (!result.isBrowserSupported) {
-        uiConsole("Browser not supported");
-        return;
+        return "Browser not supported";
       }
       const userInfo = await web3authSFAuth?.getUserInfo();
       const res = await pkPlugin.registerPasskey({
         username: `google|${userInfo?.email || userInfo?.name} - ${new Date().toLocaleDateString("en-GB")}`,
       });
-      if (res) uiConsole("Passkey saved successfully");
+      if (res) return "Passkey saved successfully";
     } catch (error: unknown) {
-      uiConsole((error as Error).message);
+      console.log((error as Error).message);
     }
+  };
+  const listAllPasskeys = async () => {
+    if (!pkPlugin) {
+      return "plugin not initialized yet";
+    }
+    const res = await pkPlugin.listAllPasskeys();
+    return res;
   };
   return (
     <Web3AuthContext.Provider
       value={{
         onSuccess,
         loginWithPasskey,
-        getUserInfo,
         logout,
-        getAccounts,
-        getBalance,
         authenticateUser,
         registerPasskey,
         provider,
         web3authSFAuth,
+        userInfo,
+        setUserInfo,
+        userAccount,
+        setUserAccount,
+        userBalance,
+        setUserBalance,
+        isLoggingIn,
+        setIsLoggingIn,
+        listAllPasskeys,
       }}
     >
       {children}
