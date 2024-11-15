@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 function Layout() {
   return (
     <>
-      <div className="flex flex-col overflow-y-scroll h-screen">
+      <div className="flex overflow-y-scroll h-screen w-screen">
         <Outlet />
       </div>
     </>
