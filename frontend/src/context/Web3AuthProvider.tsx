@@ -8,6 +8,7 @@ import { PasskeysPlugin } from "@web3auth/passkeys-sfa-plugin";
 import { WalletServicesPlugin } from "@web3auth/wallet-services-plugin";
 import { shouldSupportPasskey } from "../utils";
 import { AuthUserInfo } from "@web3auth/auth";
+import { ethers } from "ethers";
 
 const clientId = "BMOtGZg6Gtzh3MbWIgs8EJzl5Ig-tSFaPkULxG3HKm2jpUVVrH4HudSraHzHl73dm64WJ3qiowXvW_0xoinv8wM";
 const verifier = "banana-google";
@@ -213,6 +214,41 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
     const res = await pkPlugin.listAllPasskeys();
     return res;
   };
+
+  // const postLoginFlow = async (provider: IProvider | null) => {
+  //   const biconomyConfig = {
+  //     biconomyPaymasterApiKey: import.meta.env.VITE_BICONOMY_PAYMASTER_API_KEY,
+  //     bundleUrl: `https://bundler.biconomy.io/api/v3/534351/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44`,
+  //   };
+
+  //   if (web3authSFAuth && web3authSFAuth?.connected && provider) {
+  //     const user = await web3authSFAuth.getUserInfo();
+  //     const rpc = new RPC(provider);
+  //     const address = await rpc.getAccounts();
+
+  //     const ethersProvider = new ethers.BrowserProvider(provider as IProvider);
+  //     setWeb3AuthSigner(ethersProvider.getSigner());
+
+  //     const paymaster: IPaymaster = await createPaymaster({
+  //       paymasterUrl: `https://paymaster.biconomy.io/api/v1/84532/${biconomyConfig.biconomyPaymasterApiKey}`,
+  //       strictMode: false,
+  //     });
+
+  //     const sw = await createSmartAccountClient({
+  //       signer: ethersProvider.getSigner(),
+  //       biconomyPaymasterApiKey: biconomyConfig.biconomyPaymasterApiKey,
+  //       // paymasterUrl: `https://paymaster.biconomy.io/api/v1/84532/${biconomyConfig.biconomyPaymasterApiKey}`,
+  //       bundlerUrl: biconomyConfig.bundleUrl,
+  //       paymaster: paymaster,
+  //       rpcUrl: "https://base-sepolia-rpc.publicnode.com",
+  //       chainId: 84532,
+  //     });
+
+  //     setSmartWallet(sw);
+
+  //     const swAddress = await sw.getAccountAddress();
+  //   }
+  // };
   return (
     <Web3AuthContext.Provider
       value={{

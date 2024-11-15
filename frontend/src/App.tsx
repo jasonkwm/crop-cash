@@ -7,6 +7,7 @@ function App() {
 
   const logoutView = (
     <div>
+      <div className="w-[100px] h-[100px] bg-white"> potato banana</div>
       <GoogleLogin onSuccess={onSuccess} useOneTap />
       <button onClick={loginWithPasskey} className="card passkey">
         Login with Passkey
@@ -21,16 +22,6 @@ function App() {
       ) : (
         <div className="grid">{web3authSFAuth ? provider ? <AppRouter /> : logoutView : null}</div>
       )}
-
-      <footer className="footer">
-        <a
-          href="https://github.com/Web3Auth/web3auth-core-kit-examples/tree/main/single-factor-auth-web/sfa-web-google-example"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Source code
-        </a>
-      </footer>
     </div>
   );
 }
