@@ -7,7 +7,7 @@ import { useGlobalState } from "./context/GlobalStateProvider";
 
 function App() {
   const { onSuccess, loginWithPasskey, isLoggingIn, web3authSFAuth, provider } = useWeb3Auth();
-  const { isModalOpen, handleCloseModal, handleOpenModal } = useGlobalState();
+  const { isModalOpen, handleCloseModal } = useGlobalState();
   const handleKYCSubmit = (file: File) => {
     console.log("KYC File Submitted:", file);
     // Add your file upload logic here
