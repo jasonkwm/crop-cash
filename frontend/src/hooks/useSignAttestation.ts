@@ -7,7 +7,7 @@ import { PaymasterMode, UserOpResponse } from "@biconomy/account";
 import toast from "react-hot-toast";
 
 export const useSignAttestation = () => {
-  const { smartWallet, provider } = useContext(Web3AuthContext) as Web3AuthProviderType;
+  const { smartWallet } = useContext(Web3AuthContext) as Web3AuthProviderType;
 
   const [attestionId, setAttestationId] = useState("");
 

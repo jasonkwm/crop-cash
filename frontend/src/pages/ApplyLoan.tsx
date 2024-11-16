@@ -3,6 +3,7 @@ import { GoogleMap, LoadScript, Marker, Polygon } from "@react-google-maps/api";
 import * as geometry from "spherical-geometry-js";
 import { useSignAttestation } from "../hooks/useSignAttestation";
 import { useApplyLoan } from "../hooks/useApplyLoan";
+import { useNavigate } from "react-router-dom";
 
 // Function to calculate the area of a polygon in hectares
 function calculateAreaHectares(coords: any) {
@@ -91,6 +92,7 @@ const ApplyLoan = () => {
 
   const { createLandAttestation, attestionId } = useSignAttestation();
   const { applyLoan, appliedDone } = useApplyLoan();
+  const navigate = useNavigate();
 
   const handleCreateLandAttestation = async () => {
     await createLandAttestation(
@@ -137,6 +139,8 @@ const ApplyLoan = () => {
     }, 1000);
 
     await applyLoan(Number(attestionId), loanAmount);
+
+    navigate("/");
   };
 
   return (

@@ -261,7 +261,7 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
         chainId: 534351,
       });
 
-      const swAddress = await sw.getAccountAddress();
+      const swAddress = await sw.getAddress();
       setSmartWallet(sw);
       setSmartWalletAddress(swAddress);
     }

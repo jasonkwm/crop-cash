@@ -4,7 +4,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import Navbar from "./components/Navbar";
 
 function App() {
-  const { onSuccess, loginWithPasskey, isLoggedIn, web3authSFAuth, provider } = useWeb3Auth();
+  const { onSuccess, loginWithPasskey, isLoggingIn, web3authSFAuth, provider } = useWeb3Auth();
 
   const logoutView = (
     <div className="h-1/4 flex flex-col justify-between">
@@ -22,7 +22,7 @@ function App() {
     <>
       <Navbar />
       <div className="w-screen max-w-[1920px] h-screen flex flex-col items-center justify-center md:flex-row md:justify-around p-4">
-        {isLoggedIn ? <h1>LOGGING IN....</h1> : <>{web3authSFAuth ? provider ? <AppRouter /> : logoutView : null}</>}
+        {isLoggingIn ? <h1>LOGGING IN....</h1> : <>{web3authSFAuth ? provider ? <AppRouter /> : logoutView : null}</>}
       </div>
     </>
   );

@@ -12,7 +12,7 @@ export default class EthereumRpc {
     try {
       // For ethers v5
       // const provider = new ethers.providers.Web3Provider(this.provider as IProvider);
-      const provider = new ethers.BrowserProvider(this.provider as IProvider);
+      const provider = new ethers.providers.Web3Provider(this.provider as IProvider);
       // For ethers v5
       // const signer = provider.getSigner();
       const signer = await provider.getSigner();
@@ -27,7 +27,7 @@ export default class EthereumRpc {
     try {
       // For ethers v5
       // const provider = new ethers.providers.Web3Provider(this.provider as IProvider);
-      const provider = new ethers.BrowserProvider(this.provider as IProvider);
+      const provider = new ethers.providers.Web3Provider(this.provider as IProvider);
       // For ethers v5
       // const signer = provider.getSigner();
       const signer = await provider.getSigner();
@@ -38,7 +38,7 @@ export default class EthereumRpc {
       // const balance = ethers.utils.formatEther(
       // await provider.getBalance(address) // Balance is in wei
       // );
-      const balance = ethers.formatEther(
+      const balance = ethers.utils.formatEther(
         await provider.getBalance(address) // Balance is in wei
       );
       return balance;
@@ -51,7 +51,7 @@ export default class EthereumRpc {
     try {
       // For ethers v5
       // const provider = new ethers.providers.Web3Provider(this.provider as IProvider);
-      const provider = new ethers.BrowserProvider(this.provider as IProvider);
+      const provider = new ethers.providers.Web3Provider(this.provider as IProvider);
       // For ethers v5
       // const signer = provider.getSigner();
       const signer = await provider.getSigner();
@@ -69,7 +69,7 @@ export default class EthereumRpc {
     try {
       // For ethers v5
       // const provider = new ethers.providers.Web3Provider(this.provider as IProvider);
-      const provider = new ethers.BrowserProvider(this.provider as IProvider);
+      const provider = new ethers.providers.Web3Provider(this.provider as IProvider);
       // For ethers v5
       // const signer = provider.getSigner();
       const signer = await provider.getSigner();
@@ -78,7 +78,7 @@ export default class EthereumRpc {
       // Convert 1 ether to wei
       // For ethers v5
       // const amount = ethers.utils.parseEther("0.0001");
-      const amount = ethers.parseEther("0.0001");
+      const amount = ethers.utils.parseEther("0.0001");
 
       let transaction = {
         to: address,
