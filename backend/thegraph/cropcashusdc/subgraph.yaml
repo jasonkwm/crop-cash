@@ -1,0 +1,35 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: CropCashUSDC
+    network: scroll-sepolia
+    source:
+      address: "0xE10cEd24353325fD5C8dc5EFEbb25CAA0Ae564C2"
+      abi: CropCashUSDC
+      startBlock: 7304622
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - EIP712DomainChanged
+        - OwnershipTransferred
+        - Transfer
+      abis:
+        - name: CropCashUSDC
+          file: ./abis/CropCashUSDC.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: EIP712DomainChanged()
+          handler: handleEIP712DomainChanged
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/crop-cash-usdc.ts
