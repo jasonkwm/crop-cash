@@ -1,66 +1,8 @@
-import React from "react";
 import ProgressBar from "./ProgressBar";
-import { getFarmerNfts } from "../graphClient/graphClient";
-
-interface FarmItemProps {
-  cropType: string;
-  fieldSize: number;
-  tonPerHectare: number;
-  pricePerTon: number;
-  funded: number;
-}
-
-const FarmItem: React.FC<FarmItemProps> = ({ cropType, fieldSize, tonPerHectare, pricePerTon, funded }) => {
-  // Calculate total revenue
-  const totalRevenue = fieldSize * tonPerHectare * pricePerTon;
-
-  return (
-    <div className="bg-[#F8F8F8] shadow-md rounded-md p-4 mb-4">
-      <div className="flex justify-between items-end">
-        <div>
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">Crop: {cropType}</h3>
-          <p className="text-gray-600">
-            <strong>Field Size:</strong> {fieldSize.toFixed(2)} hectares
-          </p>
-          <p className="text-gray-600">
-            <strong>Tons per Hectare:</strong> {tonPerHectare} tons
-          </p>
-          <p className="text-gray-600">
-            <strong>Market Price per Ton:</strong> ${pricePerTon}
-          </p>
-          <p className="text-gray-600">
-            <strong>Total Revenue:</strong> ${totalRevenue.toLocaleString()}
-          </p>
-        </div>
-        <div className="flex flex-col gap-2">
-          <button className="bg-ourYellow TEXT-WH">Repay</button>
-          <button className="bg-green-400">Claim</button>
-        </div>
-      </div>
-      <ProgressBar funded={funded} total={totalRevenue} />
-    </div>
-  );
-};
-
-const farmersCrop = [
-  {
-    cropType: "🍚 Rice",
-    tonPerHectare: 4,
-    pricePerTon: 269,
-    fieldSize: 10.3,
-    funded: 5620,
-  },
-  {
-    cropType: "🍌 Banana",
-    tonPerHectare: 25,
-    pricePerTon: 700,
-    fieldSize: 8.1,
-    funded: 23000,
-  },
-];
+import { useGlobalState } from "../context/GlobalStateProvider";
 
 export default function FarmerDashboard() {
-  // getFarmerNfts("0x45e08d5516880eb5896334f80ba9c90318ca505c");
+  const { farmersData } = useGlobalState();
   return (
     <div className="max-w-2xl mx-auto mt-8 w-[90%] bg-white p-6 rounded">
       <div className="flex justify-between">
@@ -69,8 +11,31 @@ export default function FarmerDashboard() {
           <button className="bg-blue-400">Apply Loan</button>
         </a>
       </div>
-      {farmersCrop.map((crop, index) => (
-        <FarmItem key={index} {...crop} />
+      {farmersData.map((fData: any, index: any) => (
+        <div key={index} className="bg-[#F8F8F8] shadow-md rounded-md p-4 mb-4">
+          <div className="flex justify-between items-end">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Crop: {fData.cropData.cropType}</h3>
+              <p className="text-gray-600">
+                <strong>Field Size:</strong> {fData.fieldSize.toFixed(2)} hectares
+              </p>
+              <p className="text-gray-600">
+                <strong>Tons per Hectare:</strong> {fData.cropData.tonPerHectare} tons
+              </p>
+              <p className="text-gray-600">
+                <strong>Market Price per Ton:</strong> ${fData.cropData.pricePerTon}
+              </p>
+              <p className="text-gray-600">
+                <strong>Total Revenue:</strong> ${fData.askingLoan.toLocaleString()}
+              </p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <button className="bg-ourYellow TEXT-WH">Repay</button>
+              <button className="bg-green-400">Claim</button>
+            </div>
+          </div>
+          <ProgressBar funded={fData.funded} total={fData.askingLoan} />
+        </div>
       ))}
     </div>
   );

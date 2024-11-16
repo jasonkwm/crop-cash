@@ -82,7 +82,7 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
           usePnPKey: false, // Setting this to true returns the same key as PnP Web SDK, By default, this SDK returns CoreKitKey.
           privateKeyProvider: ethereumPrivateKeyProvider,
         });
-        const plugin = new PasskeysPlugin({ buildEnv: "testing", rpID: "cropcash.xyz" });
+        const plugin = new PasskeysPlugin({ buildEnv: "testing", rpID: "crop-cash.vercel.app" });
         web3authSfa?.addPlugin(plugin);
         setPkPlugin(plugin);
         const wsPlugin = new WalletServicesPlugin({

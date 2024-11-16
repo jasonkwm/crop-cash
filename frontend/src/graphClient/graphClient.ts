@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import request, { gql } from "graphql-request";
 
-const cropCashConsumerUrl = "https://api.studio.thegraph.com/query/94953/cropcashconsumer/version/latest";
+// const cropCashConsumerUrl = "https://api.studio.thegraph.com/query/94953/cropcashconsumer/version/latest";
 const cropCashLandNftUrl = "https://api.studio.thegraph.com/query/94953/cropcashlandnft/version/latest";
 
 export const getFarmerNfts = async (farmerAddress: string) => {
