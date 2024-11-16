@@ -3,6 +3,7 @@ import { useGlobalState } from "../context/GlobalStateProvider";
 import { getFarmerNftDetails, getFarmerNfts, getLoanInitializeds } from "../graphClient/graphClient";
 import { useWeb3Auth } from "../context/Web3AuthProvider";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // const farmersCrop = [
 //   {
@@ -45,6 +46,7 @@ export default function FarmerDashboard() {
   const nftsDetails = getFarmerNftDetails();
   const loanInitialized = getLoanInitializeds(smartWalletAddress);
   const { farmersData, setFarmersData, kycDone, handleOpenModal, setKycDone } = useGlobalState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let farmerLands = [];
@@ -80,12 +82,13 @@ export default function FarmerDashboard() {
         <h1 className="text-2xl font-bold text-gray-800 mb-6">Farmers Dashboard</h1>
 
         {kycDone ? (
-          <a href="/apply-loan" className="text-black hover:text-black">
-            <button className="bg-blue-400 hover:bg-blue-500 transition-all flex justify-center items-center gap-2">
-              <img src="/blue-med-saturated320px.png" width={40} height={40} />
-              <span>Apply Loan</span>
-            </button>
-          </a>
+          <button
+            className="bg-blue-400 hover:bg-blue-500 transition-all flex justify-center items-center gap-2"
+            onClick={() => navigate("/apply-loan")}
+          >
+            <img src="/blue-med-saturated320px.png" width={40} height={40} />
+            <span>Apply Loan</span>
+          </button>
         ) : (
           <button
             className="bg-ourGreen hover:bg-ourGreenDark text-black  flex justify-center items-center gap-2"
