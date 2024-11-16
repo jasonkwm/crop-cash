@@ -1,4 +1,5 @@
 import React from "react";
+import ProgressBar from "./ProgressBar";
 
 interface FarmItemProps {
   cropType: string;
@@ -38,17 +39,7 @@ const FarmItem: React.FC<FarmItemProps> = ({ cropType, fieldSize, tonPerHectare,
           <button className="bg-green-400">Claim</button>
         </div>
       </div>
-      <div className="mt-4">
-        <div className="text-sm text-gray-600 mb-1">
-          Loan Progress: ${funded.toLocaleString()} / ${totalRevenue.toLocaleString()}
-        </div>
-        <div className="w-full bg-gray-200 rounded-full h-4">
-          <div
-            className="bg-green-500 h-4 rounded-full transition-all"
-            style={{ width: `${progressPercentage}%` }}
-          ></div>
-        </div>
-      </div>
+      <ProgressBar funded={funded} total={totalRevenue} />
     </div>
   );
 };
