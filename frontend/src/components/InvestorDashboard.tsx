@@ -58,11 +58,6 @@ export default function InvestorDashboard() {
     <div className="max-w-2xl mx-auto mt-8 w-[90%] bg-white p-6 rounded">
       <div className="flex justify-between">
         <h1 className="text-2xl font-bold text-gray-800 mb-6">Loan Applications</h1>
-        {!isSwitchOn && (
-          <a href="/apply-loan" className="text-black hover:text-black">
-            <button className="bg-blue-400">Apply Loan</button>
-          </a>
-        )}
       </div>
       {investorsData.map((fData: any, index: any) => (
         <div key={index} className="bg-[#F8F8F8] shadow-md rounded-md p-4 mb-4">
