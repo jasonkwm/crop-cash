@@ -380,13 +380,16 @@ export default function Chart() {
               <ProgressBar funded={raisedAmount} total={totalAmount} />
 
               {/* Input field for contribution amount */}
-              <input
-                type="number"
-                value={contributionAmount} // Bind the input value to contributionAmount
-                onChange={(e) => setContributionAmount(Number(e.target.value))} // Allow manual input
-                placeholder="Enter amount"
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
-              />
+              <div className="flex flex-row">
+                <input
+                  type="text"
+                  value={`${contributionAmount}$`}
+                  onChange={(e) => setContributionAmount(Number(e.target.value.replace("$", "")))}
+                  placeholder="Enter custom amount ($)"
+                  className="appearance-none pt-3 pb-3 w-full text-center rounded-lg bg-transparent text-lg font-semibold mr-0 pr-0 focus:outline-none"
+                />
+                {/* <span className="pr-3 pb-3 pt-3 text-black text-lg font-semibold">$</span> */}
+              </div>
 
               {/* Predefined buttons */}
               <div className="flex justify-between mt-4 gap-x-4">
@@ -411,7 +414,7 @@ export default function Chart() {
               </div>
 
               {/* Contribute button */}
-              <button className="w-full text-white bg-green-700 py-2 rounded">Contribute now!</button>
+              <button className="w-full text-white bg-green-700 py-2 rounded">🚜 Fund Farmer!</button>
             </div>
           </div>
 
