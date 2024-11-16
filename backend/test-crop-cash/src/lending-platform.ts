@@ -2,7 +2,7 @@ import {
   FundsDeposited as FundsDepositedEvent,
   FundsWithdrawn as FundsWithdrawnEvent,
   LendingRequestCreated as LendingRequestCreatedEvent
-} from "../generated/Lend/Lend"
+} from "../generated/LendingPlatform/LendingPlatform"
 import {
   FundsDeposited,
   FundsWithdrawn,

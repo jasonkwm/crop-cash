@@ -4,7 +4,7 @@ import {
   FundsDeposited,
   FundsWithdrawn,
   LendingRequestCreated
-} from "../generated/Lend/Lend"
+} from "../generated/LendingPlatform/LendingPlatform"
 
 export function createFundsDepositedEvent(
   requestId: BigInt,
