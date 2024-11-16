@@ -57,6 +57,10 @@ export const GlobalStateProvider = ({ children }: { children: any }) => {
     avgTimeBetweenHarvest: 6, // In months
     estFullGrownDate: "", // String
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [kycDone, setKycDone] = useState(false);
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
   const toggleSwitch = () => {
     setIsSwitchOn(!isSwitchOn);
   };
@@ -73,6 +77,11 @@ export const GlobalStateProvider = ({ children }: { children: any }) => {
         setSelectedLoan,
         investorsData,
         setInvestorsData,
+        isModalOpen,
+        handleOpenModal,
+        handleCloseModal,
+        kycDone,
+        setKycDone,
       }}
     >
       {children}
