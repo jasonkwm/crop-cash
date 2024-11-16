@@ -1,218 +1,42 @@
 [
   {
-    "year": "2018",
+    "year": "2020",
     "month": "02",
     "day": "01",
     "value": "68.79",
-    "path": "chartData/field1/2018/2018_02_01_68.79.jpg",
+    "path": "chartData/field1/2020/2020_02_01_68.79.jpg",
     "repeat": false
   },
   {
-    "year": "2018",
+    "year": "2020",
     "month": "02",
     "day": "14",
     "value": "68.68",
-    "path": "chartData/field1/2018/2018_02_01_68.68.jpg",
+    "path": "chartData/field1/2020/2020_02_01_68.68.jpg",
     "repeat": false
   },
   {
-    "year": "2018",
+    "year": "2020",
     "month": "03",
     "day": "01",
     "value": "25.42",
-    "path": "chartData/field1/2018/2018_03_01_25.42.jpg",
+    "path": "chartData/field1/2020/2020_03_01_25.42.jpg",
     "repeat": false
   },
   {
-    "year": "2018",
+    "year": "2020",
     "month": "03",
     "day": "14",
     "value": "0.00",
-    "path": "chartData/field1/2018/2018_03_01_0.00.jpg",
+    "path": "chartData/field1/2020/2020_03_01_0.00.jpg",
     "repeat": false
   },
   {
-    "year": "2018",
+    "year": "2020",
     "month": "04",
     "day": "01",
     "value": "6.05",
-    "path": "chartData/field1/2018/2018_04_01_6.05.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2018",
-    "month": "04",
-    "day": "14",
-    "value": "0.74",
-    "path": "chartData/field1/2018/2018_04_01_0.74.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2018",
-    "month": "05",
-    "day": "14",
-    "value": "0.89",
-    "path": "chartData/field1/2018/2018_05_01_0.89.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2018",
-    "month": "06",
-    "day": "01",
-    "value": "0.89",
-    "path": "chartData/field1/2018/2018_06_01_0.89.jpg",
-    "repeat": true
-  },
-  {
-    "year": "2018",
-    "month": "07",
-    "day": "14",
-    "value": "19.63",
-    "path": "chartData/field1/2018/2018_07_01_19.63.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2018",
-    "month": "07",
-    "day": "01",
-    "value": "0.89",
-    "path": "chartData/field1/2018/2018_07_01_0.89.jpg",
-    "repeat": true
-  },
-  {
-    "year": "2018",
-    "month": "08",
-    "day": "01",
-    "value": "19.63",
-    "path": "chartData/field1/2018/2018_08_01_19.63.jpg",
-    "repeat": true
-  },
-  {
-    "year": "2018",
-    "month": "09",
-    "day": "14",
-    "value": "2.16",
-    "path": "chartData/field1/2018/2018_09_01_2.16.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2018",
-    "month": "10",
-    "day": "14",
-    "value": "0.00",
-    "path": "chartData/field1/2018/2018_10_01_0.00.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2019",
-    "month": "02",
-    "day": "14",
-    "value": "68.68",
-    "path": "chartData/field1/2019/2019_02_01_68.68.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2019",
-    "month": "03",
-    "day": "14",
-    "value": "0.00",
-    "path": "chartData/field1/2019/2019_03_01_0.00.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2019",
-    "month": "04",
-    "day": "14",
-    "value": "0.74",
-    "path": "chartData/field1/2019/2019_04_01_0.74.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2019",
-    "month": "05",
-    "day": "14",
-    "value": "0.89",
-    "path": "chartData/field1/2019/2019_05_01_0.89.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2019",
-    "month": "06",
-    "day": "01",
-    "value": "0.89",
-    "path": "chartData/field1/2019/2019_06_01_0.89.jpg",
-    "repeat": true
-  },
-  {
-    "year": "2019",
-    "month": "07",
-    "day": "01",
-    "value": "7.58",
-    "path": "chartData/field1/2019/2019_07_01_7.58.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2019",
-    "month": "08",
-    "day": "01",
-    "value": "69.11",
-    "path": "chartData/field1/2019/2019_08_01_69.11.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2019",
-    "month": "09",
-    "day": "14",
-    "value": "2.16",
-    "path": "chartData/field1/2019/2019_09_01_2.16.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2019",
-    "month": "10",
-    "day": "01",
-    "value": "0.11",
-    "path": "chartData/field1/2019/2019_10_01_0.11.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2020",
-    "month": "01",
-    "day": "01",
-    "value": "69.37",
-    "path": "chartData/field1/2020/2020_01_01_69.37.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2020",
-    "month": "02",
-    "day": "01",
-    "value": "2.95",
-    "path": "chartData/field1/2020/2020_02_01_2.95.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2020",
-    "month": "03",
-    "day": "01",
-    "value": "0.00",
-    "path": "chartData/field1/2020/2020_03_01_0.00.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2020",
-    "month": "03",
-    "day": "14",
-    "value": "0.00",
-    "path": "chartData/field1/2020/2020_03_01_0.00.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2020",
-    "month": "04",
-    "day": "01",
-    "value": "0.16",
-    "path": "chartData/field1/2020/2020_04_01_0.16.jpg",
+    "path": "chartData/field1/2020/2020_04_01_6.05.jpg",
     "repeat": false
   },
   {
@@ -242,14 +66,6 @@
   {
     "year": "2020",
     "month": "07",
-    "day": "01",
-    "value": "69.00",
-    "path": "chartData/field1/2020/2020_07_01_69.00.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2020",
-    "month": "07",
     "day": "14",
     "value": "19.63",
     "path": "chartData/field1/2020/2020_07_01_19.63.jpg",
@@ -267,24 +83,8 @@
     "year": "2020",
     "month": "08",
     "day": "01",
-    "value": "0.00",
-    "path": "chartData/field1/2020/2020_08_01_0.00.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2020",
-    "month": "08",
-    "day": "14",
-    "value": "0.00",
-    "path": "chartData/field1/2020/2020_08_01_0.00.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2020",
-    "month": "08",
-    "day": "01",
-    "value": "0.89",
-    "path": "chartData/field1/2020/2020_08_01_0.89.jpg",
+    "value": "19.63",
+    "path": "chartData/field1/2020/2020_08_01_19.63.jpg",
     "repeat": true
   },
   {
@@ -297,50 +97,10 @@
   },
   {
     "year": "2020",
-    "month": "09",
-    "day": "01",
-    "value": "0.89",
-    "path": "chartData/field1/2020/2020_09_01_0.89.jpg",
-    "repeat": true
-  },
-  {
-    "year": "2020",
     "month": "10",
-    "day": "01",
-    "value": "2.16",
-    "path": "chartData/field1/2020/2020_10_01_2.16.jpg",
-    "repeat": true
-  },
-  {
-    "year": "2020",
-    "month": "11",
-    "day": "01",
-    "value": "2.16",
-    "path": "chartData/field1/2020/2020_11_01_2.16.jpg",
-    "repeat": true
-  },
-  {
-    "year": "2020",
-    "month": "12",
-    "day": "01",
-    "value": "20.42",
-    "path": "chartData/field1/2020/2020_12_01_20.42.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2021",
-    "month": "01",
-    "day": "01",
-    "value": "4.95",
-    "path": "chartData/field1/2021/2021_01_01_4.95.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2021",
-    "month": "02",
-    "day": "01",
-    "value": "69.42",
-    "path": "chartData/field1/2021/2021_02_01_69.42.jpg",
+    "day": "14",
+    "value": "0.00",
+    "path": "chartData/field1/2020/2020_10_01_0.00.jpg",
     "repeat": false
   },
   {
@@ -354,25 +114,9 @@
   {
     "year": "2021",
     "month": "03",
-    "day": "01",
-    "value": "0.37",
-    "path": "chartData/field1/2021/2021_03_01_0.37.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2021",
-    "month": "03",
     "day": "14",
     "value": "0.00",
     "path": "chartData/field1/2021/2021_03_01_0.00.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2021",
-    "month": "04",
-    "day": "01",
-    "value": "0.00",
-    "path": "chartData/field1/2021/2021_04_01_0.00.jpg",
     "repeat": false
   },
   {
@@ -395,32 +139,24 @@
     "year": "2021",
     "month": "06",
     "day": "01",
-    "value": "12.58",
-    "path": "chartData/field1/2021/2021_06_01_12.58.jpg",
-    "repeat": false
+    "value": "0.89",
+    "path": "chartData/field1/2021/2021_06_01_0.89.jpg",
+    "repeat": true
   },
   {
     "year": "2021",
     "month": "07",
     "day": "01",
-    "value": "69.21",
-    "path": "chartData/field1/2021/2021_07_01_69.21.jpg",
+    "value": "7.58",
+    "path": "chartData/field1/2021/2021_07_01_7.58.jpg",
     "repeat": false
   },
   {
     "year": "2021",
     "month": "08",
     "day": "01",
-    "value": "69.53",
-    "path": "chartData/field1/2021/2021_08_01_69.53.jpg",
-    "repeat": false
-  },
-  {
-    "year": "2021",
-    "month": "09",
-    "day": "01",
-    "value": "0.58",
-    "path": "chartData/field1/2021/2021_09_01_0.58.jpg",
+    "value": "69.11",
+    "path": "chartData/field1/2021/2021_08_01_69.11.jpg",
     "repeat": false
   },
   {
@@ -429,6 +165,286 @@
     "day": "14",
     "value": "2.16",
     "path": "chartData/field1/2021/2021_09_01_2.16.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2021",
+    "month": "10",
+    "day": "01",
+    "value": "0.11",
+    "path": "chartData/field1/2021/2021_10_01_0.11.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2022",
+    "month": "01",
+    "day": "01",
+    "value": "69.37",
+    "path": "chartData/field1/2022/2022_01_01_69.37.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2022",
+    "month": "02",
+    "day": "01",
+    "value": "2.95",
+    "path": "chartData/field1/2022/2022_02_01_2.95.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2022",
+    "month": "03",
+    "day": "01",
+    "value": "0.00",
+    "path": "chartData/field1/2022/2022_03_01_0.00.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2022",
+    "month": "03",
+    "day": "14",
+    "value": "0.00",
+    "path": "chartData/field1/2022/2022_03_01_0.00.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2022",
+    "month": "04",
+    "day": "01",
+    "value": "0.16",
+    "path": "chartData/field1/2022/2022_04_01_0.16.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2022",
+    "month": "04",
+    "day": "14",
+    "value": "0.74",
+    "path": "chartData/field1/2022/2022_04_01_0.74.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2022",
+    "month": "05",
+    "day": "14",
+    "value": "0.89",
+    "path": "chartData/field1/2022/2022_05_01_0.89.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2022",
+    "month": "06",
+    "day": "01",
+    "value": "0.89",
+    "path": "chartData/field1/2022/2022_06_01_0.89.jpg",
+    "repeat": true
+  },
+  {
+    "year": "2022",
+    "month": "07",
+    "day": "01",
+    "value": "69.00",
+    "path": "chartData/field1/2022/2022_07_01_69.00.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2022",
+    "month": "07",
+    "day": "14",
+    "value": "19.63",
+    "path": "chartData/field1/2022/2022_07_01_19.63.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2022",
+    "month": "07",
+    "day": "01",
+    "value": "0.89",
+    "path": "chartData/field1/2022/2022_07_01_0.89.jpg",
+    "repeat": true
+  },
+  {
+    "year": "2022",
+    "month": "08",
+    "day": "01",
+    "value": "0.00",
+    "path": "chartData/field1/2022/2022_08_01_0.00.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2022",
+    "month": "08",
+    "day": "14",
+    "value": "0.00",
+    "path": "chartData/field1/2022/2022_08_01_0.00.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2022",
+    "month": "08",
+    "day": "01",
+    "value": "0.89",
+    "path": "chartData/field1/2022/2022_08_01_0.89.jpg",
+    "repeat": true
+  },
+  {
+    "year": "2022",
+    "month": "09",
+    "day": "01",
+    "value": "0.00",
+    "path": "chartData/field1/2022/2022_09_01_0.00.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2022",
+    "month": "09",
+    "day": "14",
+    "value": "2.16",
+    "path": "chartData/field1/2022/2022_09_01_2.16.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2022",
+    "month": "09",
+    "day": "01",
+    "value": "0.89",
+    "path": "chartData/field1/2022/2022_09_01_0.89.jpg",
+    "repeat": true
+  },
+  {
+    "year": "2022",
+    "month": "10",
+    "day": "01",
+    "value": "2.16",
+    "path": "chartData/field1/2022/2022_10_01_2.16.jpg",
+    "repeat": true
+  },
+  {
+    "year": "2022",
+    "month": "11",
+    "day": "01",
+    "value": "2.16",
+    "path": "chartData/field1/2022/2022_11_01_2.16.jpg",
+    "repeat": true
+  },
+  {
+    "year": "2022",
+    "month": "12",
+    "day": "01",
+    "value": "20.42",
+    "path": "chartData/field1/2022/2022_12_01_20.42.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2023",
+    "month": "01",
+    "day": "01",
+    "value": "4.95",
+    "path": "chartData/field1/2023/2023_01_01_4.95.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2023",
+    "month": "02",
+    "day": "01",
+    "value": "69.42",
+    "path": "chartData/field1/2023/2023_02_01_69.42.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2023",
+    "month": "02",
+    "day": "14",
+    "value": "68.68",
+    "path": "chartData/field1/2023/2023_02_01_68.68.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2023",
+    "month": "03",
+    "day": "01",
+    "value": "0.37",
+    "path": "chartData/field1/2023/2023_03_01_0.37.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2023",
+    "month": "03",
+    "day": "14",
+    "value": "0.00",
+    "path": "chartData/field1/2023/2023_03_01_0.00.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2023",
+    "month": "04",
+    "day": "01",
+    "value": "0.00",
+    "path": "chartData/field1/2023/2023_04_01_0.00.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2023",
+    "month": "04",
+    "day": "14",
+    "value": "0.74",
+    "path": "chartData/field1/2023/2023_04_01_0.74.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2023",
+    "month": "05",
+    "day": "14",
+    "value": "0.89",
+    "path": "chartData/field1/2023/2023_05_01_0.89.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2023",
+    "month": "06",
+    "day": "01",
+    "value": "12.58",
+    "path": "chartData/field1/2023/2023_06_01_12.58.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2023",
+    "month": "07",
+    "day": "01",
+    "value": "69.21",
+    "path": "chartData/field1/2023/2023_07_01_69.21.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2023",
+    "month": "08",
+    "day": "01",
+    "value": "69.53",
+    "path": "chartData/field1/2023/2023_08_01_69.53.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2023",
+    "month": "09",
+    "day": "01",
+    "value": "0.58",
+    "path": "chartData/field1/2023/2023_09_01_0.58.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2023",
+    "month": "09",
+    "day": "14",
+    "value": "2.16",
+    "path": "chartData/field1/2023/2023_09_01_2.16.jpg",
+    "repeat": false
+  },
+  {
+    "year": "2023",
+    "month": "10",
+    "day": "01",
+    "value": "23.42",
+    "path": "chartData/field1/2023/2023_10_01_23.42.jpg",
     "repeat": false
   }
 ]
