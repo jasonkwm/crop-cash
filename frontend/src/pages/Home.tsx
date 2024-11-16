@@ -1,8 +1,10 @@
 // import { useGlobalState } from "../context/GlobalStateProvider";
+import FarmerDashboard from "../components/FarmerDashboard";
+import { useGlobalState } from "../context/GlobalStateProvider";
 import { useWeb3Auth } from "../context/Web3AuthProvider";
 
 export default function Home() {
-  // const { employee, setEmployee } = useGlobalState();
+  const { isSwitchOn } = useGlobalState();
   const { logout, registerPasskey, listAllPasskeys, userBalance, userAccount, smartWalletAddress } = useWeb3Auth();
   const loginView = (
     <>
@@ -28,5 +30,5 @@ export default function Home() {
       </div>
     </>
   );
-  return <>{loginView}</>;
+  return <FarmerDashboard />;
 }
