@@ -67,7 +67,7 @@ export default function InvestorDashboard() {
             </div>
             <div className="flex flex-col gap-2">
               <button
-                className="bg-green-400"
+                className="bg-green-400 text-black"
                 onClick={() => {
                   setSelectedLoan(index);
                   navigate("/chart");

@@ -100,8 +100,8 @@ export default function FarmerDashboard() {
               </p>
             </div>
             <div className="flex flex-col gap-2">
-              <button className="bg-ourYellow TEXT-WH">Repay</button>
-              <button className="bg-green-400">Claim</button>
+              <button className="bg-ourYellow text-black">Repay</button>
+              <button className="bg-green-400 text-black">Claim</button>
             </div>
           </div>
           <ProgressBar funded={Number(fData.funded)} total={Number(fData.askingLoan)} />
