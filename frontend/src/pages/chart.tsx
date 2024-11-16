@@ -383,7 +383,7 @@ export default function Chart() {
                 value={contributionAmount} // Bind the input value to contributionAmount
                 onChange={(e) => setContributionAmount(Number(e.target.value))} // Allow manual input
                 placeholder="Enter amount"
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
               />
 
               {/* Predefined buttons */}
@@ -419,7 +419,7 @@ export default function Chart() {
 
               <div className="space-y-2 w-full">
                 <p>
-                  <span className="font-semibold">KYC verified:</span> ✅
+                  <span className="font-semibold">KYC status:</span> verified ✅
                 </p>
                 <p>
                   <span className="font-semibold">Attestation:</span>{" "}
