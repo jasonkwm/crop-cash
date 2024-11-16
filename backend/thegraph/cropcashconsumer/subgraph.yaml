@@ -1,0 +1,56 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: CropCashConsumer
+    network: scroll-sepolia
+    source:
+      address: "0xC126DB3B0B81aDbF352F2a66D6ceE7Cc0C1AC9BA"
+      abi: CropCashConsumer
+      startBlock: 7300691
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ChainlinkCancelled
+        - ChainlinkFulfilled
+        - ChainlinkRequested
+        - LandObjectUpdated
+        - LoanInitiliazed
+        - OneTonPriceRequested
+        - OwnershipTransferRequested
+        - OwnershipTransferred
+        - RequestOneTonPriceFulfilled
+        - RequestTonPerHectareFulfilled
+        - TonPerHectareRequested
+      abis:
+        - name: CropCashConsumer
+          file: ./abis/CropCashConsumer.json
+      eventHandlers:
+        - event: ChainlinkCancelled(indexed bytes32)
+          handler: handleChainlinkCancelled
+        - event: ChainlinkFulfilled(indexed bytes32)
+          handler: handleChainlinkFulfilled
+        - event: ChainlinkRequested(indexed bytes32)
+          handler: handleChainlinkRequested
+        - event: LandObjectUpdated(indexed uint256,string,string,string,string,uint256)
+          handler: handleLandObjectUpdated
+        - event: LoanInitiliazed(indexed address,uint256,uint256)
+          handler: handleLoanInitiliazed
+        - event: OneTonPriceRequested(bool)
+          handler: handleOneTonPriceRequested
+        - event: OwnershipTransferRequested(indexed address,indexed address)
+          handler: handleOwnershipTransferRequested
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: RequestOneTonPriceFulfilled(indexed bytes32,indexed uint256)
+          handler: handleRequestOneTonPriceFulfilled
+        - event: RequestTonPerHectareFulfilled(indexed bytes32,indexed uint256)
+          handler: handleRequestTonPerHectareFulfilled
+        - event: TonPerHectareRequested(bool)
+          handler: handleTonPerHectareRequested
+      file: ./src/crop-cash-consumer.ts
