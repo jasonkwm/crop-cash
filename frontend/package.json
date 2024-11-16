@@ -12,6 +12,7 @@
   "dependencies": {
     "@biconomy/account": "^4.5.7",
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@ethsign/sp-sdk": "^0.7.7",
     "@react-oauth/google": "^0.12.1",
     "@web3auth/base": "^9.4.0",
     "@web3auth/ethereum-provider": "^9.4.0",
@@ -19,6 +20,7 @@
     "@web3auth/single-factor-auth": "^9.2.0",
     "@web3auth/wallet-services-plugin": "^9.4.0",
     "buffer": "^6.0.3",
+    "ethers": "5",
     "firebase": "^11.0.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
