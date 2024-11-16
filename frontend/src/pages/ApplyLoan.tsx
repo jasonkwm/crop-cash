@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { GoogleMap, LoadScript, Marker, Polygon } from "@react-google-maps/api";
 import * as geometry from "spherical-geometry-js";
@@ -123,7 +122,7 @@ const ApplyLoan = () => {
   };
 
   return (
-    <div className="flex flex-col items-center p-6 space-y-6 items-center justify-center w-full">
+    <div className="flex flex-col p-6 space-y-6 items-center justify-center w-full">
       <div className="flex flex-col w-full max-w-4xl space-y-6 md:space-y-0 items-center justify-center">
         {/* Step 1: Draw Farm Boundary */}
         <div
