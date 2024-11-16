@@ -430,13 +430,5 @@
     "value": "2.16",
     "path": "chartData/field1/2021/2021_09_01_2.16.jpg",
     "repeat": false
-  },
-  {
-    "year": "2021",
-    "month": "10",
-    "day": "01",
-    "value": "23.42",
-    "path": "chartData/field1/2021/2021_10_01_23.42.jpg",
-    "repeat": false
   }
 ]
