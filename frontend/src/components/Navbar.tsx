@@ -3,7 +3,7 @@ import { useGlobalState } from "../context/GlobalStateProvider";
 
 const Navbar = () => {
   const { isSwitchOn, toggleSwitch } = useGlobalState();
-  const { logout, smartWalletAddress, provider, loginWithPasskey, userInfo } = useWeb3Auth();
+  const { logout, smartWalletAddress, provider, loginWithPasskey, userInfo, registerPasskey } = useWeb3Auth();
 
   const shortenAddress = (address: string): string => `${address.slice(0, 6)}...${address.slice(-4)}`;
 
@@ -41,6 +41,7 @@ const Navbar = () => {
             >
               {userInfo && userInfo.name ? userInfo.name : shortenAddress(smartWalletAddress)}
             </span>
+            <button onClick={() => registerPasskey()}>Register Passkey</button>
             <button
               onClick={logout}
               className="bg-secondary hover:bg-secondaryLight  px-10 py-2 md:px-4 rounded text-lg font-bold font-normal tracking-wider"
