@@ -47,7 +47,16 @@ export const GlobalStateProvider = ({ children }: { children: any }) => {
   const [isSwitchOn, setIsSwitchOn] = useState(true);
   const [farmersData, setFarmersData] = useState([]);
   const [investorsData, setInvestorsData] = useState([]);
-  const [selectedLoan, setSelectedLoan] = useState(0);
+  const [selectedLoan, setSelectedLoan] = useState({
+    tokenId: 0,
+    cropData: cropData[0],
+    fieldSize: 8.1,
+    funded: 23000,
+    askingLoan: 8.1 * (cropData[1].tonPerHectare * cropData[1].pricePerTon),
+    avgHarvestPerYear: 2,
+    avgTimeBetweenHarvest: 6, // In months
+    estFullGrownDate: "", // String
+  });
   const toggleSwitch = () => {
     setIsSwitchOn(!isSwitchOn);
   };

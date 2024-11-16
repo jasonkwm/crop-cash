@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ApexCharts from "react-apexcharts";
 import ProgressBar from "../components/ProgressBar";
 import ReactSpeedometer from "react-d3-speedometer";
+import { useGlobalState } from "../context/GlobalStateProvider";
 
 interface ChartData {
   year: number;
@@ -73,9 +74,10 @@ export default function Chart() {
   const [predictedFullGrown, setPredictedFullGrown] = useState<string>("");
   const [monthsDifferenceInfo, setMonthsDiffrenceInfo] = useState<string>("");
   const [isAccordionOpen, setIsAccordionOpen] = useState<boolean>(false);
+  const { selectedLoan } = useGlobalState();
 
-  const raisedAmount = 15300;
-  const totalAmount = 30000;
+  const raisedAmount = selectedLoan.funded;
+  const totalAmount = selectedLoan.askingLoan;
   // const contributors = 69;
 
   const confidenceValue = 41;
@@ -429,13 +431,14 @@ export default function Chart() {
                   <span className="font-semibold">Location:</span> 🇲🇾
                 </p>
                 <p>
-                  <span className="font-semibold">Hectare:</span> 69 Ha
+                  <span className="font-semibold">Hectare:</span> {selectedLoan.fieldSize} Ha
                 </p>
                 <p>
-                  <span className="font-semibold">Avg. Harvests/Year:</span> 2
+                  <span className="font-semibold">Avg. Harvests/Year:</span> {selectedLoan.avgHarvestPerYear}
                 </p>
                 <p>
-                  <span className="font-semibold">Avg. Time Between Harvests:</span> 7 months
+                  <span className="font-semibold">Avg. Time Between Harvests:</span>{" "}
+                  {selectedLoan.avgTimeBetweenHarvest} Months
                 </p>
                 <p>
                   <span className="font-semibold">EST. next full Grown: </span> {predictedFullGrown} (in{" "}

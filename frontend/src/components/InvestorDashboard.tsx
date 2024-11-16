@@ -69,7 +69,7 @@ export default function InvestorDashboard() {
               <button
                 className="bg-green-400 text-black"
                 onClick={() => {
-                  setSelectedLoan(index);
+                  setSelectedLoan(fData);
                   navigate("/chart");
                 }}
               >
