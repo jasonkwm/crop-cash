@@ -18,7 +18,7 @@ const verifier = "banana-google";
 const chainConfig: any = {
   chainNamespace: CHAIN_NAMESPACES.EIP155,
   chainId: "0x8274f", // Please use 0x1 for Mainnet
-  rpcTarget: "https://scroll-sepolia-rpc.publicnode.com",
+  rpcTarget: "https://scroll-sepolia.g.alchemy.com/v2/rpYXDr8O6PwNFU3YH2beQAPoXMfaraxs",
   displayName: "Scroll Sepolia",
   blockExplorerUrl: "https://sepolia.scrollscan.com/",
   ticker: "ETH",
@@ -260,7 +260,7 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
         // paymasterUrl: `https://paymaster.biconomy.io/api/v1/84532/${biconomyConfig.biconomyPaymasterApiKey}`,
         bundlerUrl: biconomyConfig.bundleUrl,
         paymaster: paymaster,
-        rpcUrl: "https://scroll-sepolia-rpc.publicnode.com",
+        rpcUrl: "https://scroll-sepolia.g.alchemy.com/v2/rpYXDr8O6PwNFU3YH2beQAPoXMfaraxs",
         chainId: 534351,
       });
 

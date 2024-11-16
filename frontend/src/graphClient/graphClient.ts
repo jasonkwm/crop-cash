@@ -4,7 +4,7 @@ import request, { gql } from "graphql-request";
 const cropCashConsumerUrl = "https://api.studio.thegraph.com/query/94953/cropcashconsumer/version/latest";
 const cropCashLandNftUrl = "https://api.studio.thegraph.com/query/94953/cropcashlandnft/version/latest";
 // const cropCashUsdcUrl = "https://api.studio.thegraph.com/query/94953/cropcashusdc/version/latest";
-// const cropCashFundUrl = "https://api.studio.thegraph.com/query/94953/cropcashfund/version/latest";
+const cropCashFundUrl = "https://api.studio.thegraph.com/query/94953/cropcashfund/version/latest";
 
 export const getFarmerNfts = (farmerAddress: string) => {
   const query = gql`
@@ -99,6 +99,31 @@ export const getAllLoanNfts = () => {
     queryFn: async () => {
       console.log("Getting graph data");
       const data = await request(cropCashConsumerUrl, query);
+      console.log("GRAPHQL DATA", data);
+      return data;
+    },
+  });
+};
+
+export const getFundeds = () => {
+  const query = gql`
+    {
+      fundeds {
+        id
+        tokenId
+        investor
+        amount
+      }
+    }
+  `;
+
+  console.log(`Querying all fundeds`);
+
+  return useQuery({
+    queryKey: ["getFundeds"],
+    queryFn: async () => {
+      console.log("Getting graph data");
+      const data = await request(cropCashFundUrl, query);
       console.log("GRAPHQL DATA", data);
       return data;
     },
