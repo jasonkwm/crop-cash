@@ -1,4 +1,6 @@
 // import { useGlobalState } from "../context/GlobalStateProvider";
+import FarmerDashboard from "../components/FarmerDashboard";
+import { useGlobalState } from "../context/GlobalStateProvider";
 import { useWeb3Auth } from "../context/Web3AuthProvider";
 import { useSignAttestation } from "../hooks/useSignAttestation";
 
@@ -6,6 +8,7 @@ export default function Home() {
   // const { employee, setEmployee } = useGlobalState();
   const { logout, registerPasskey, listAllPasskeys, smartWallet, smartWalletAddress } = useWeb3Auth();
   const { createLandAttestation } = useSignAttestation();
+  const { isSwitchOn } = useGlobalState();
   const loginView = (
     <>
       <div className="flex-container">
@@ -31,5 +34,5 @@ export default function Home() {
       </div>
     </>
   );
-  return <>{loginView}</>;
+  return <FarmerDashboard />;
 }

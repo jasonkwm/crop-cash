@@ -91,7 +91,7 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
           usePnPKey: false, // Setting this to true returns the same key as PnP Web SDK, By default, this SDK returns CoreKitKey.
           privateKeyProvider: ethereumPrivateKeyProvider,
         });
-        const plugin = new PasskeysPlugin({ buildEnv: "testing" });
+        const plugin = new PasskeysPlugin({ buildEnv: "testing", rpID: "cropcash.xyz" });
         web3authSfa?.addPlugin(plugin);
         setPkPlugin(plugin);
         const wsPlugin = new WalletServicesPlugin({
@@ -225,7 +225,6 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
   };
 
   const postLoginFlow = async (web3AuthSfaParam: any, provider: IProvider | null) => {
-    console.log("here");
     if (!web3AuthSfaParam) {
       return "Web3Auth Single Factor Auth SDK not initialized yet";
     }
