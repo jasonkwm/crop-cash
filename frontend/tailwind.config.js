@@ -10,7 +10,7 @@ export default {
       colors: {
         background: "#EBEBEB", // Main background color
         foreground: "#C0C0C0", // Section background color
-        primary: "#6a3fd1", // Bitcoin color - use for important elements (buttons, etc)
+        primary: "#6a3fd1",
         primaryLight: "#714ad3",
         secondary: "#ec8fe9", // Soft blue - use for card background, etc
         secondaryLight: "#ea9ae7",
