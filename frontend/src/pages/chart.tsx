@@ -379,12 +379,20 @@ export default function Chart() {
               data.map((entry: ChartData, index) => {
                 if (entry.path && !entry.repeat) {
                   return (
+                    <div
+                    key={index}
+                    className="flex-none bg-white p-4 rounded-lg shadow-lg w-64 max-w-xs my-3 hover:shadow-2xl transition-shadow"
+                  >
                     <img
-                      key={index}
-                      src={entry.path}
-                      alt={`Satellite Image for ${entry.year}-${entry.month}-${entry.day}`}
-                      className="w-48 h-48 object-cover rounded-md"
+                      src={`/${entry.path}`}
+                      alt={`Image from ${entry.year}-${entry.month}-${entry.day}`}
+                      className="w-full h-48 object-cover rounded-lg mb-4"
                     />
+                    <p className="text-lg font-semibold text-gray-800">NDVI: {entry.value}</p>
+                    <p className="text-sm text-gray-500">
+                      {entry.year}-{entry.month}-{entry.day}
+                    </p>
+                  </div>
                   );
                 }
                 return null;
