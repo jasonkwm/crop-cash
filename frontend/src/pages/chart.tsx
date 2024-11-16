@@ -74,13 +74,13 @@ export default function Chart() {
   const [monthsDifferenceInfo, setMonthsDiffrenceInfo] = useState<string>("");
   const [isAccordionOpen, setIsAccordionOpen] = useState<boolean>(false);
 
-  const [raisedAmount, setRaisedAmount] = useState<number>(15300);
-  const [totalAmount, setTotalAmount] = useState<number>(30000);
-  const [contributors, setContributors] = useState<number>(69);
+  const raisedAmount = 15300;
+  const totalAmount = 30000;
+  // const contributors = 69;
 
-  const [confidenceValue, setConfidenceValue] = useState<number>(41);
+  const confidenceValue = 41;
 
-  const [contributionAmount, setContributionAmount] = useState<number>(0);
+  const [contributionAmount, setContributionAmount] = useState(0);
 
   const handleContributionClick = (amount: number) => {
     setContributionAmount(amount);
@@ -422,7 +422,8 @@ export default function Chart() {
                   <span className="font-semibold">KYC verified:</span> ✅
                 </p>
                 <p>
-                  <span className="font-semibold">Attestation:</span> <a href="https://testnet-scan.sign.global/attestation/onchain_evm_534351_0x68">View</a>
+                  <span className="font-semibold">Attestation:</span>{" "}
+                  <a href="https://testnet-scan.sign.global/attestation/onchain_evm_534351_0x68">View</a>
                 </p>
                 <p>
                   <span className="font-semibold">Location:</span> 🇲🇾
