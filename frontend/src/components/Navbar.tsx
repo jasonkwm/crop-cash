@@ -3,7 +3,7 @@ import { useGlobalState } from "../context/GlobalStateProvider";
 
 const Navbar = () => {
   const { isSwitchOn, toggleSwitch } = useGlobalState();
-  const { logout, smartWalletAddress, provider, loginWithPasskey } = useWeb3Auth();
+  const { logout, smartWalletAddress, provider, loginWithPasskey, userInfo } = useWeb3Auth();
 
   const shortenAddress = (address: string): string => `${address.slice(0, 6)}...${address.slice(-4)}`;
 
@@ -39,7 +39,7 @@ const Navbar = () => {
                 alert("Address copied!");
               }}
             >
-              {shortenAddress(smartWalletAddress)}
+              {userInfo && userInfo.name ? userInfo.name : shortenAddress(smartWalletAddress)}
             </span>
             <button
               onClick={logout}
