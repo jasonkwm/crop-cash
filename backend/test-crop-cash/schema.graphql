@@ -1,0 +1,31 @@
+type FundsDeposited @entity(immutable: true) {
+  id: Bytes!
+  requestId: BigInt! # uint256
+  lender: Bytes! # address
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type FundsWithdrawn @entity(immutable: true) {
+  id: Bytes!
+  requestId: BigInt! # uint256
+  borrower: Bytes! # address
+  totalAmount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LendingRequestCreated @entity(immutable: true) {
+  id: Bytes!
+  requestId: BigInt! # uint256
+  borrower: Bytes! # address
+  amount: BigInt! # uint256
+  interestRate: BigInt! # uint256
+  duration: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
