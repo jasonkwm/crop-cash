@@ -1,0 +1,8 @@
+{
+  "scroll-sepolia": {
+    "CropCashConsumer": {
+      "address": "0xC126DB3B0B81aDbF352F2a66D6ceE7Cc0C1AC9BA",
+      "startBlock": 7300691
+    }
+  }
+}
