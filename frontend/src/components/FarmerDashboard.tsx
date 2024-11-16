@@ -81,11 +81,18 @@ export default function FarmerDashboard() {
 
         {kycDone ? (
           <a href="/apply-loan" className="text-black hover:text-black">
-            <button className="bg-blue-400 hover:bg-blue-500 transition-all">Apply Loan</button>
+            <button className="bg-blue-400 hover:bg-blue-500 transition-all flex justify-center items-center gap-2">
+              <img src="/blue-med-saturated320px.png" width={40} height={40} />
+              <span>Apply Loan</span>
+            </button>
           </a>
         ) : (
-          <button className="bg-ourGreen hover:bg-ourGreenDark text-black" onClick={handleOpenModal}>
-            KYC to apply loan
+          <button
+            className="bg-ourGreen hover:bg-ourGreenDark text-black  flex justify-center items-center gap-2"
+            onClick={handleOpenModal}
+          >
+            <img src="yellow-saturated1600px.png" width={40} height={40} />
+            <span>KYC to apply loan</span>
           </button>
         )}
       </div>
@@ -108,8 +115,14 @@ export default function FarmerDashboard() {
               </p>
             </div>
             <div className="flex flex-col gap-2">
-              <button className="bg-ourYellow text-black">Repay</button>
-              <button className="bg-ourGreen hover:bg-ourGreenDark text-black">Claim</button>
+              <button className="bg-ourYellow text-black flex justify-center items-center gap-2">
+                <img src="/red800px.png" width={40} height={40} />
+                <span>Repay</span>
+              </button>
+              <button className="bg-ourGreen hover:bg-ourGreenDark text-black flex gap-2 justify-center items-center">
+                <img src="/frog-green800px.png" width={40} height={40} />
+                <span>View</span>
+              </button>
             </div>
           </div>
           <ProgressBar funded={Number(fData.funded)} total={Number(fData.askingLoan)} />

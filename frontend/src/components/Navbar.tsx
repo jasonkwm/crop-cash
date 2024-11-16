@@ -12,7 +12,7 @@ const Navbar = () => {
       {/* Home Icon */}
       <div className="flex items-center space-x-2">
         <a href="/" className="text-lg font-bold hover:text-gray-300 p-2">
-          <img src="/home-2.png" width={48} height={48} />
+          <img src="/earth.gif" width={48} height={48} />
         </a>
       </div>
 
@@ -33,7 +33,7 @@ const Navbar = () => {
               />
             </button>
             <span
-              className="text-sm font-mono bg-gray-700 px-10 py-2 md:px-4 rounded"
+              className="text-sm font-mono bg-gray-700 px-10 py-2 md:px-4 rounded font-normal"
               onClick={() => {
                 navigator.clipboard.writeText(smartWalletAddress);
                 alert("Address copied!");

@@ -84,13 +84,14 @@ export default function InvestorDashboard() {
             </div>
             <div className="flex flex-col gap-2">
               <button
-                className="bg-ourGreen hover:bg-ourGreenDark text-black"
+                className="bg-ourGreen hover:bg-ourGreenDark text-black flex gap-2 justify-center items-center"
                 onClick={() => {
                   setSelectedLoan(fData);
                   navigate("/chart");
                 }}
               >
-                View
+                <img src="/frog-green800px.png" width={40} height={40} />
+                <span>View</span>
               </button>
             </div>
           </div>
