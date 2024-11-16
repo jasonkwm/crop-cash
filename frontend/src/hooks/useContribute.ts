@@ -6,7 +6,7 @@ import { PaymasterMode, UserOpResponse } from "@biconomy/account";
 import { CropCashUSDCABI } from "../abis/CropCashUSDC";
 
 export const useContribute = () => {
-  const { smartWallet, smartWalletAddress } = useWeb3Auth();
+  const { smartWallet } = useWeb3Auth();
 
   const contribute = async (tokenId: number, amount: number) => {
     console.log("Contributing...");
