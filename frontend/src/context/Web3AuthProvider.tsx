@@ -51,7 +51,7 @@ export type Web3AuthProviderType = {
   setSmartWallet: React.Dispatch<React.SetStateAction<BiconomySmartAccountV2 | undefined>>;
   smartWalletAddress: string;
   setSmartWalletAddress: React.Dispatch<React.SetStateAction<string>>;
-  provider: any;
+  provider: IProvider | null;
   web3authSFAuth: any;
   wsPlugin: any;
   isLoggingIn: any;
@@ -91,7 +91,7 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
           usePnPKey: false, // Setting this to true returns the same key as PnP Web SDK, By default, this SDK returns CoreKitKey.
           privateKeyProvider: ethereumPrivateKeyProvider,
         });
-        const plugin = new PasskeysPlugin({ buildEnv: "testing", rpID: "cropcash.xyz" });
+        const plugin = new PasskeysPlugin({ buildEnv: "testing" });
         web3authSfa?.addPlugin(plugin);
         setPkPlugin(plugin);
         const wsPlugin = new WalletServicesPlugin({

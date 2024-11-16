@@ -29,9 +29,7 @@ export default function Home() {
             Log Out
           </button>
         </div>
-        <div>
-          <button onClick={createLandAttestation}>CreateAttestation</button>
-        </div>
+        <div>{/* <button onClick={createLandAttestation}>CreateAttestation</button> */}</div>
       </div>
     </>
   );

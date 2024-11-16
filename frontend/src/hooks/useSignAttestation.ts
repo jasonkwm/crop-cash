@@ -1,28 +1,35 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Web3AuthContext, Web3AuthProviderType } from "../context/Web3AuthProvider";
 import { Attestation } from "@ethsign/sp-sdk";
 import { encodeFunctionData, parseAbi } from "viem";
 import { ethers } from "ethers";
 import { PaymasterMode, UserOpResponse } from "@biconomy/account";
+import toast from "react-hot-toast";
 
 export const useSignAttestation = () => {
-  const { smartWallet } = useContext(Web3AuthContext) as Web3AuthProviderType;
+  const { smartWallet, provider } = useContext(Web3AuthContext) as Web3AuthProviderType;
 
-  const createLandAttestation = async () => {
+  const [attestionId, setAttestationId] = useState("");
+
+  const createLandAttestation = async (c1: string, c2: string, c3: string, c4: string, size: number) => {
     console.log("Creating land attestation...");
+    const toastId = toast.loading("Signing...");
     const attesterAddress = await smartWallet?.getAccountAddress();
     const attestionObj: Attestation = {
       schemaId: "0x58",
       data: {
-        coordinate1: "[100.1995513267014,5.352340029111249]",
-        coordinate2: "[100.19905780024266,5.3498938331027075]",
-        coordinate3: "[100.20274851984715,5.348996536044997]",
-        coordinate4: "[100.2034244365189,5.351667059132401]",
+        coordinate1: c1,
+        coordinate2: c2,
+        coordinate3: c3,
+        coordinate4: c4,
       },
       attester: attesterAddress,
       indexingValue: String(attesterAddress),
       recipients: [attesterAddress as `0x${string}`],
     };
+
+    console.log("attestationdata", attestionObj.data);
+    console.log("attestationdatasize", size);
 
     const encodedCall = encodeFunctionData({
       abi: parseAbi([
@@ -60,7 +67,7 @@ export const useSignAttestation = () => {
             (attestionObj.data as any).coordinate2,
             (attestionObj.data as any).coordinate3,
             (attestionObj.data as any).coordinate4,
-            12,
+            size,
           ]
         ) as `0x${string}`,
       ],
@@ -79,9 +86,34 @@ export const useSignAttestation = () => {
 
     console.log("Finish Attesting LFG");
     console.log(transactionHash, userOperationReceipt);
+
+    toast.dismiss(toastId);
+    toast.success("Finish Signing", { duration: 2000 });
+
+    const ethersProvider = new ethers.providers.JsonRpcProvider("https://scroll-sepolia-rpc.publicnode.com");
+    const targetAddress = "0x4e4af2a21ebf62850fD99Eb6253E1eFBb56098cD".toLowerCase(); // Sign contract address
+    const targetTopic = ethers.utils.id("AttestationMade(uint64,string)");
+    const receipts = await ethersProvider.getTransactionReceipt(transactionHash!);
+
+    const attestationMades = receipts.logs.filter((log) => {
+      return log.address.toLowerCase() === targetAddress && log.topics.includes(targetTopic);
+    });
+
+    const iface = new ethers.utils.Interface(["event AttestationMade(uint64 attestationId, string indexingKey)"]);
+
+    // Decode the log using the Interface
+    const decodedLog = iface.parseLog(attestationMades[0]);
+
+    console.log("decodedLog", decodedLog);
+
+    // Extract the first parameter (uint64 indexed id)
+    const attestationId = decodedLog.args[0]; // The first uint64 parameter
+
+    setAttestationId(`0x${Number(attestationId).toString(16)}`);
   };
 
   return {
     createLandAttestation,
+    attestionId,
   };
 };
