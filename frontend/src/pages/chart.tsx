@@ -182,17 +182,17 @@ export default function Chart() {
         });
 
         // Calculate median intervals and predict next events
-        const calculateMedianInterval = (dates: Date[]) => {
-          if (dates.length < 2) return 0;
-          const intervals = dates.slice(1).map((date, index) => {
-            return (date.getTime() - dates[index].getTime()) / (1000 * 60 * 60 * 24);
-          });
-          intervals.sort((a, b) => a - b);
-          const mid = Math.floor(intervals.length / 2);
-          return intervals.length % 2 === 0
-            ? Math.round((intervals[mid - 1] + intervals[mid]) / 2)
-            : Math.round(intervals[mid]);
-        };
+        // const calculateMedianInterval = (dates: Date[]) => {
+        //   if (dates.length < 2) return 0;
+        //   const intervals = dates.slice(1).map((date, index) => {
+        //     return (date.getTime() - dates[index].getTime()) / (1000 * 60 * 60 * 24);
+        //   });
+        //   intervals.sort((a, b) => a - b);
+        //   const mid = Math.floor(intervals.length / 2);
+        //   return intervals.length % 2 === 0
+        //     ? Math.round((intervals[mid - 1] + intervals[mid]) / 2)
+        //     : Math.round(intervals[mid]);
+        // };
 
         // Calculate the month difference between two dates
         const calculateMonthDifference = (startDate: Date, endDate: Date) => {
