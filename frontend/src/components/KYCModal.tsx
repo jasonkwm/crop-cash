@@ -37,7 +37,7 @@ const KYCModal: React.FC<KYCModalProps> = ({ isOpen, onClose, onSubmit }) => {
       <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
         {isSubmitted ? (
           <div className="flex flex-col items-center">
-            <div className="w-16 h-16 mb-4 flex items-center justify-center bg-green-100 rounded-full">
+            <div className="w-16 h-16 mb-4 flex items-center justify-center bg-ourGreen hover:bg-ourGreenDark rounded-full">
               <svg
                 className="w-8 h-8 text-green-600"
                 xmlns="http://www.w3.org/2000/svg"

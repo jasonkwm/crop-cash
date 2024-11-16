@@ -411,7 +411,9 @@ export default function Chart() {
               </div>
 
               {/* Contribute button */}
-              <button className="w-full text-white bg-green-700 py-2 rounded">Contribute now!</button>
+              <button className="w-full text-white bg-ourGreen hover:bg-ourGreenDark py-2 rounded">
+                Contribute now!
+              </button>
             </div>
           </div>
 

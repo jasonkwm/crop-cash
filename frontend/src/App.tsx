@@ -14,8 +14,9 @@ function App() {
   };
 
   const logoutView = (
-    <div className="h-1/4 flex flex-col justify-between">
-      <h1 className="font-extrabold text-black text-6xl font-header">CROP CASH</h1>
+    <div className="flex flex-col justify-between">
+      <img src="/CropCashLogo.png" width={420} height={420} className="py-12" />
+      {/* <h1 className="font-extrabold text-black text-6xl font-header">CROP CASH 🌾</h1> */}
       <div className="flex flex-col gap-4 w-[90%] text-center m-auto">
         <GoogleLogin onSuccess={onSuccess} useOneTap />
         <button onClick={loginWithPasskey} className="card passkey font-normal">

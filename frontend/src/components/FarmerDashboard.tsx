@@ -82,10 +82,10 @@ export default function FarmerDashboard() {
 
         {kycDone ? (
           <a href="/apply-loan" className="text-black hover:text-black">
-            <button className="bg-blue-400">Apply Loan</button>
+            <button className="bg-blue-400 hover:bg-blue-500 transition-all">Apply Loan</button>
           </a>
         ) : (
-          <button className="bg-green-400" onClick={handleOpenModal}>
+          <button className="bg-ourGreen hover:bg-ourGreenDark text-black" onClick={handleOpenModal}>
             KYC to apply loan
           </button>
         )}
@@ -110,7 +110,7 @@ export default function FarmerDashboard() {
             </div>
             <div className="flex flex-col gap-2">
               <button className="bg-ourYellow text-black">Repay</button>
-              <button className="bg-green-400 text-black">Claim</button>
+              <button className="bg-ourGreen hover:bg-ourGreenDark text-black">Claim</button>
             </div>
           </div>
           <ProgressBar funded={Number(fData.funded)} total={Number(fData.askingLoan)} />

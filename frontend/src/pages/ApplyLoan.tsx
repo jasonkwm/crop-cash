@@ -4,6 +4,7 @@ import * as geometry from "spherical-geometry-js";
 import { useSignAttestation } from "../hooks/useSignAttestation";
 import { useApplyLoan } from "../hooks/useApplyLoan";
 import { useNavigate } from "react-router-dom";
+import { useGlobalState } from "../context/GlobalStateProvider";
 
 // Function to calculate the area of a polygon in hectares
 function calculateAreaHectares(coords: any) {
@@ -89,7 +90,7 @@ const ApplyLoan = () => {
   const [status, setStatus] = useState<number>(0);
   const [landOwnership, setLandOwnership] = useState<File | null>(null);
   const [landAttested, setLandAttested] = useState(false);
-
+  const { setIsSwitchOn } = useGlobalState();
   const { createLandAttestation, attestionId } = useSignAttestation();
   const { applyLoan, appliedDone } = useApplyLoan();
   const navigate = useNavigate();
@@ -139,6 +140,7 @@ const ApplyLoan = () => {
     }, 1000);
 
     await applyLoan(Number(attestionId), loanAmount);
+    setIsSwitchOn(false);
     navigate("/");
   };
 
@@ -326,7 +328,7 @@ const ApplyLoan = () => {
 
               <button
                 onClick={handleSubmit}
-                className="w-full p-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02]"
+                className="w-full p-3 bg-ourGreen hover:bg-ourGreenDark text-white font-semibold rounded-lg shadow-md disabled:bg-gray-300 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02]"
                 disabled={loanAmount <= 0}
               >
                 Apply For Loan

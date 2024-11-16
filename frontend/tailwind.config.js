@@ -16,6 +16,8 @@ export default {
         secondaryLight: "#ea9ae7",
         ourBlue: "#2dd8da",
         ourYellow: "#f7d929",
+        ourGreen: "#befc53",
+        ourGreenDark: "#aaea3c",
       },
     },
   },
