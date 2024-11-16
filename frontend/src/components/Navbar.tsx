@@ -33,7 +33,7 @@ const Navbar = () => {
               />
             </button>
             <span
-              className="text-sm font-mono bg-gray-700 py-1 px-3 rounded"
+              className="text-sm font-mono bg-gray-700 px-10 py-2 md:px-4 rounded"
               onClick={() => {
                 navigator.clipboard.writeText(smartWalletAddress);
                 alert("Address copied!");
@@ -43,7 +43,7 @@ const Navbar = () => {
             </span>
             <button
               onClick={logout}
-              className="bg-secondary hover:bg-secondaryLight  px-10 py-2 rounded text-lg font-bold font-normal tracking-wider"
+              className="bg-secondary hover:bg-secondaryLight  px-10 py-2 md:px-4 rounded text-lg font-bold font-normal tracking-wider"
             >
               Logout
             </button>
