@@ -29,7 +29,9 @@ export default function InvestorDashboard() {
     const queryData = async () => {
       if (nftsDetails.data && allLoans.data) {
         for (let transfer of (nftsDetails.data as any).landObjectUpdateds) {
-          const foundAmount = (allLoans.data as any).loanInitiliazeds.find((w: any) => transfer.tokenId === w.tokenId);
+          const foundAmount = ((allLoans.data as any).loanInitiliazeds as any[])
+            .reverse()
+            .find((w: any) => transfer.tokenId === w.tokenId);
           if (!transfer || !foundAmount) continue;
           const [totalFunded, _] = await publicClient.readContract({
             address: import.meta.env.VITE_CROP_CASH_FUND,
@@ -53,6 +55,8 @@ export default function InvestorDashboard() {
     };
     queryData();
   }, [nftsDetails, allLoans]);
+
+  console.log(investorsData);
 
   return (
     <div className="max-w-2xl mx-auto mt-8 w-[90%] bg-white p-6 rounded">

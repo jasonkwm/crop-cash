@@ -104,3 +104,28 @@ export const getAllLoanNfts = () => {
     },
   });
 };
+
+export const getFundeds = () => {
+  const query = gql`
+    {
+      fundeds {
+        id
+        tokenId
+        investor
+        amount
+      }
+    }
+  `;
+
+  console.log(`Querying all fundeds`);
+
+  return useQuery({
+    queryKey: ["getFundeds"],
+    queryFn: async () => {
+      console.log("Getting graph data");
+      const data = await request(cropCashFundUrl, query);
+      console.log("GRAPHQL DATA", data);
+      return data;
+    },
+  });
+};

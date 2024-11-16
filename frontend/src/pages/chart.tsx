@@ -10,6 +10,7 @@ import { createPublicClient, http } from "viem";
 import { scrollSepolia } from "viem/chains";
 import { useWeb3Auth } from "../context/Web3AuthProvider";
 import { useContribute } from "../hooks/useContribute";
+import { getFundeds } from "../graphClient/graphClient";
 
 interface ChartData {
   year: number;
@@ -90,6 +91,22 @@ export default function Chart() {
   const { selectedLoan } = useGlobalState();
   const [raisedAmount, setRaisedAmount] = useState(selectedLoan.funded);
   const { smartWalletAddress } = useWeb3Auth();
+
+  const fundeds = getFundeds();
+
+  let numberOfContributors = 0;
+  let totalFundedAmount: number = 0;
+  if (fundeds.data) {
+    const a = (fundeds.data as any).fundeds;
+    numberOfContributors = [...new Set(a.map((v: any) => v.investor))].length;
+    for (let v of a) {
+      if (v.tokenId != selectedLoan.tokenId) continue;
+      totalFundedAmount += Number(v.amount);
+    }
+  }
+
+  console.log({ totalFundedAmount });
+  console.log({ numberOfContributors });
 
   console.log("selectedLoan", selectedLoan);
 
@@ -433,13 +450,15 @@ export default function Chart() {
                 </span>
               </p>
               <p>
-                <span className="font-semibold">Total Contributors:</span> 69
+                <span className="font-semibold">Total Contributors:</span> {numberOfContributors}
               </p>
               <p>
-                <span className="font-semibold">Average Contributed:</span> 765$
+                <span className="font-semibold">Average Contributed:</span>{" "}
+                {totalFundedAmount / (numberOfContributors ?? 1)}
               </p>
               <ProgressBar funded={raisedAmount} total={totalAmount} />
 
+              <p className="text-xs">Balance: {usdcBalance}$</p>
               {/* Input field for contribution amount */}
               <div className="flex flex-row py-10">
                 <input
@@ -475,7 +494,9 @@ export default function Chart() {
               </div>
 
               {/* Contribute button */}
-              <button className="w-full text-white bg-green-700 py-2 rounded">🚜 Fund Farmer!</button>
+              <button className="w-full text-white bg-green-700 py-2 rounded" onClick={handleContribute}>
+                🚜 Fund Farmer!
+              </button>
             </div>
           </div>
 

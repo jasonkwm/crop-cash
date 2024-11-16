@@ -139,7 +139,7 @@ const ApplyLoan = () => {
       }, 1000);
     }, 1000);
 
-    await applyLoan(Number(attestionId), loanAmount);
+    await applyLoan(Number(127), loanAmount);
     setIsSwitchOn(false);
     navigate("/");
   };

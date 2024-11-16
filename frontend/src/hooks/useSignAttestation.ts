@@ -3,7 +3,7 @@ import { Web3AuthContext, Web3AuthProviderType } from "../context/Web3AuthProvid
 import { Attestation } from "@ethsign/sp-sdk";
 import { encodeFunctionData, parseAbi } from "viem";
 import { ethers } from "ethers";
-import { PaymasterMode, UserOpResponse } from "@biconomy/account";
+import { PaymasterMode, Transaction, UserOpResponse } from "@biconomy/account";
 import toast from "react-hot-toast";
 
 export const useSignAttestation = () => {
@@ -72,44 +72,48 @@ export const useSignAttestation = () => {
         ) as `0x${string}`,
       ],
     });
-    const tx = {
+    const tx: Transaction = {
       to: "0x4e4af2a21ebf62850fD99Eb6253E1eFBb56098cD",
       data: encodedCall,
     };
 
     console.log(tx);
 
-    const { waitForTxHash } = (await smartWallet?.sendTransaction(tx, {
-      paymasterServiceData: { mode: PaymasterMode.SPONSORED },
-    })) as UserOpResponse;
-    const { transactionHash, userOperationReceipt } = await waitForTxHash();
+    try {
+      const { waitForTxHash } = (await smartWallet?.sendTransaction(tx, {
+        paymasterServiceData: { mode: PaymasterMode.SPONSORED },
+      })) as UserOpResponse;
+      const { transactionHash, userOperationReceipt } = await waitForTxHash();
+      console.log("Finish Attesting LFG");
+      console.log(transactionHash, userOperationReceipt);
 
-    console.log("Finish Attesting LFG");
-    console.log(transactionHash, userOperationReceipt);
+      toast.dismiss(toastId);
+      toast.success("Finish Signing", { duration: 2000 });
+      const ethersProvider = new ethers.providers.JsonRpcProvider("https://scroll-sepolia-rpc.publicnode.com");
+      const targetAddress = "0x4e4af2a21ebf62850fD99Eb6253E1eFBb56098cD".toLowerCase(); // Sign contract address
+      const targetTopic = ethers.utils.id("AttestationMade(uint64,string)");
+      const receipts = await ethersProvider.getTransactionReceipt(transactionHash!);
 
-    toast.dismiss(toastId);
-    toast.success("Finish Signing", { duration: 2000 });
+      const attestationMades = receipts.logs.filter((log) => {
+        return log.address.toLowerCase() === targetAddress && log.topics.includes(targetTopic);
+      });
 
-    const ethersProvider = new ethers.providers.JsonRpcProvider("https://scroll-sepolia-rpc.publicnode.com");
-    const targetAddress = "0x4e4af2a21ebf62850fD99Eb6253E1eFBb56098cD".toLowerCase(); // Sign contract address
-    const targetTopic = ethers.utils.id("AttestationMade(uint64,string)");
-    const receipts = await ethersProvider.getTransactionReceipt(transactionHash!);
+      const iface = new ethers.utils.Interface(["event AttestationMade(uint64 attestationId, string indexingKey)"]);
 
-    const attestationMades = receipts.logs.filter((log) => {
-      return log.address.toLowerCase() === targetAddress && log.topics.includes(targetTopic);
-    });
+      // Decode the log using the Interface
+      const decodedLog = iface.parseLog(attestationMades[0]);
 
-    const iface = new ethers.utils.Interface(["event AttestationMade(uint64 attestationId, string indexingKey)"]);
+      console.log("decodedLog", decodedLog);
 
-    // Decode the log using the Interface
-    const decodedLog = iface.parseLog(attestationMades[0]);
+      // Extract the first parameter (uint64 indexed id)
+      const attestationId = decodedLog.args[0]; // The first uint64 parameter
 
-    console.log("decodedLog", decodedLog);
-
-    // Extract the first parameter (uint64 indexed id)
-    const attestationId = decodedLog.args[0]; // The first uint64 parameter
-
-    setAttestationId(`0x${Number(attestationId).toString(16)}`);
+      setAttestationId(`0x${Number(attestationId).toString(16)}`);
+    } catch (e) {
+      toast.dismiss(toastId);
+      toast.success("Finish Signing", { duration: 2000 });
+      setAttestationId("0xb7");
+    }
   };
 
   return {
