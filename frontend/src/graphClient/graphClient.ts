@@ -49,6 +49,7 @@ export const getFarmerNftDetails = () => {
       console.log("Getting graph data");
       const data = await request(cropCashConsumerUrl, query);
       console.log("GRAPHQL DATA", data);
+      console.log("DATADATADATA", data);
       return data;
     },
   });

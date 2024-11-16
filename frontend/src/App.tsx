@@ -21,7 +21,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className="w-screen max-w-[1920px] h-screen flex flex-col items-center justify-center md:flex-row md:justify-around p-4">
+      <div className="w-screen max-w-[1920px] flex flex-col items-center justify-center md:flex-row md:justify-around p-4">
         {isLoggingIn ? <h1>LOGGING IN....</h1> : <>{web3authSFAuth ? provider ? <AppRouter /> : logoutView : null}</>}
       </div>
     </>

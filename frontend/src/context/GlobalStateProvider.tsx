@@ -46,6 +46,7 @@ const GlobalState = createContext<any>(undefined);
 export const GlobalStateProvider = ({ children }: { children: any }) => {
   const [isSwitchOn, setIsSwitchOn] = useState(true);
   const [farmersData, setFarmersData] = useState([]);
+  const [investorsData, setInvestorsData] = useState([]);
   const [selectedLoan, setSelectedLoan] = useState(0);
   const toggleSwitch = () => {
     setIsSwitchOn(!isSwitchOn);
@@ -61,6 +62,8 @@ export const GlobalStateProvider = ({ children }: { children: any }) => {
         setFarmersData,
         selectedLoan,
         setSelectedLoan,
+        investorsData,
+        setInvestorsData,
       }}
     >
       {children}

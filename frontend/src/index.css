@@ -17,7 +17,7 @@
   -moz-osx-font-smoothing: grayscale;
   background-image: url("background.avif");
   background-position: center;
-  background-repeat: no-repeat; /* Do not repeat the image */
+  background-repeat: repeat; /* Do not repeat the image */
   background-size: cover;
 }
 
@@ -32,8 +32,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
