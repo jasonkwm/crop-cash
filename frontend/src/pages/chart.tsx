@@ -78,6 +78,14 @@ export default function Chart() {
   const [totalAmount, setTotalAmount] = useState<number>(30000);
   const [contributors, setContributors] = useState<number>(69);
 
+  const [confidenceValue, setConfidenceValue] = useState<number>(41);
+
+  const [contributionAmount, setContributionAmount] = useState<number>(0);
+
+  const handleContributionClick = (amount: number) => {
+    setContributionAmount(amount);
+  };
+
   const toggleAccordion = () => {
     setIsAccordionOpen((prev) => !prev);
   };
@@ -326,27 +334,96 @@ export default function Chart() {
         <div className="grid grid-cols-12 gap-4 mt-8 text-black">
           <div className="col-span-4 flex flex-col items-center justify-center bg-gray-100 rounded-lg p-4 h-full">
             <h1 className="font-extrabold text-black text-4xl font-header my-3">Confidence Score</h1>
-            <ReactSpeedometer  width={300} height={200}/>
+            <ReactSpeedometer maxValue={100} value={confidenceValue} width={300} height={200} />
+
+            {/* Conditional message based on the value */}
+            <p
+              className={`font-semibold text-xl ${
+                confidenceValue <= 20
+                  ? "text-red-500"
+                  : confidenceValue <= 40
+                  ? "text-red-600"
+                  : confidenceValue <= 60
+                  ? "text-yellow-500"
+                  : confidenceValue <= 80
+                  ? "text-green-500"
+                  : "text-green-700"
+              }`}
+            >
+              {confidenceValue <= 20
+                ? "Very Bad"
+                : confidenceValue <= 40
+                ? "Bad"
+                : confidenceValue <= 60
+                ? "Moderate"
+                : confidenceValue <= 80
+                ? "Good"
+                : "Very Good"}
+            </p>
           </div>
           <div className="col-span-4 flex flex-col items-start bg-gray-100 rounded-lg p-4">
-            {/* Contributors section */}
             <div className="w-full space-y-2">
               <h1 className="font-extrabold text-black text-4xl font-header my-3 text-center">Funding</h1>
-
               <p>
-                <span className="font-semibold">Contributors:</span> 69
+                <span className="font-semibold">
+                  APR: <span className="text-green-500">11.27%</span>
+                </span>
+              </p>
+              <p>
+                <span className="font-semibold">Total Contributors:</span> 69
+              </p>
+              <p>
+                <span className="font-semibold">Average Contributed:</span> 765$
               </p>
               <ProgressBar funded={raisedAmount} total={totalAmount} />
-              <button className="text-white bg-green-500">
-                Contribute now!
-              </button>
+
+              {/* Input field for contribution amount */}
+              <input
+                type="number"
+                value={contributionAmount} // Bind the input value to contributionAmount
+                onChange={(e) => setContributionAmount(Number(e.target.value))} // Allow manual input
+                placeholder="Enter amount"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+
+              {/* Predefined buttons */}
+              <div className="flex justify-between mt-4 gap-x-4">
+                <button
+                  onClick={() => handleContributionClick(250)}
+                  className="w-1/3 p-2 bg-blue-500 text-white rounded-lg"
+                >
+                  250$
+                </button>
+                <button
+                  onClick={() => handleContributionClick(500)}
+                  className="w-1/3 p-2 bg-blue-500 text-white rounded-lg"
+                >
+                  500$
+                </button>
+                <button
+                  onClick={() => handleContributionClick(1000)}
+                  className="w-1/3 p-2 bg-blue-500 text-white rounded-lg"
+                >
+                  1000$
+                </button>
+              </div>
+
+              {/* Contribute button */}
+              <button className="w-full text-white bg-green-700 py-2 rounded">Contribute now!</button>
             </div>
           </div>
+
           <div className="col-span-4 flex flex-col items-start bg-gray-100 rounded-lg p-4">
             <div className="w-full space-y-2">
               <h1 className="font-extrabold text-black text-4xl font-header my-3 text-center">Field Info</h1>
 
               <div className="space-y-2 w-full">
+                <p>
+                  <span className="font-semibold">KYC verified:</span> ✅
+                </p>
+                <p>
+                  <span className="font-semibold">Attestation:</span> <a href="https://testnet-scan.sign.global/attestation/onchain_evm_534351_0x68">View</a>
+                </p>
                 <p>
                   <span className="font-semibold">Location:</span> 🇲🇾
                 </p>
@@ -357,7 +434,7 @@ export default function Chart() {
                   <span className="font-semibold">Avg. Harvests/Year:</span> 2
                 </p>
                 <p>
-                  <span className="font-semibold">Avg. Time Between Harvests:</span> 6 months
+                  <span className="font-semibold">Avg. Time Between Harvests:</span> 7 months
                 </p>
                 <p>
                   <span className="font-semibold">EST. next full Grown: </span> {predictedFullGrown} (in{" "}
