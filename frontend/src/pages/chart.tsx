@@ -448,7 +448,7 @@ export default function Chart() {
 
         <div className="col-span-12 my-3">
           <div className="w-full h-96">
-            <ApexCharts options={chartOptions} series={chartSeries} type="line" height="100%" />
+            <ApexCharts className="text-black" options={chartOptions} series={chartSeries} type="line" height="100%" />
           </div>
         </div>
         {/* Accordion Toggle Button */}
