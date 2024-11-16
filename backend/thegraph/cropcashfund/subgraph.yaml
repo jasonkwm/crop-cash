@@ -1,0 +1,32 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: CropCashFund
+    network: scroll-sepolia
+    source:
+      address: "0xDBfb6CF2836Fa0c84F9a6741697EeEbe10Cd9726"
+      abi: CropCashFund
+      startBlock: 7304711
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Funded
+        - ProjectCreated
+        - Withdrawn
+      abis:
+        - name: CropCashFund
+          file: ./abis/CropCashFund.json
+      eventHandlers:
+        - event: Funded(indexed uint256,indexed address,uint256)
+          handler: handleFunded
+        - event: ProjectCreated(uint256,string,string,indexed address,uint256)
+          handler: handleProjectCreated
+        - event: Withdrawn(uint256,indexed address,uint256)
+          handler: handleWithdrawn
+      file: ./src/crop-cash-fund.ts

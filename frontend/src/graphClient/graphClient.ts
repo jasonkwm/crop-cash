@@ -3,6 +3,8 @@ import request, { gql } from "graphql-request";
 
 const cropCashConsumerUrl = "https://api.studio.thegraph.com/query/94953/cropcashconsumer/version/latest";
 const cropCashLandNftUrl = "https://api.studio.thegraph.com/query/94953/cropcashlandnft/version/latest";
+const cropCashUsdcUrl = "https://api.studio.thegraph.com/query/94953/cropcashusdc/version/latest";
+const cropCashFundUrl = "https://api.studio.thegraph.com/query/94953/cropcashfund/version/latest";
 
 export const getFarmerNfts = (farmerAddress: string) => {
   const query = gql`
