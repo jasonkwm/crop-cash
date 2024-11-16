@@ -3,12 +3,20 @@ import { useGlobalState } from "../context/GlobalStateProvider";
 import { useNavigate } from "react-router-dom";
 import { getAllLoanNfts, getFarmerNftDetails } from "../graphClient/graphClient";
 import { useEffect } from "react";
+import { createPublicClient, http } from "viem";
+import { scrollSepolia } from "viem/chains";
+import { CropCashFundABI } from "../abis/CropCashFund";
 
 const riceData = {
   cropType: "🍚 Rice",
   tonPerHectare: 4,
   pricePerTon: 269,
 };
+
+const publicClient = createPublicClient({
+  chain: scrollSepolia,
+  transport: http(),
+});
 
 export default function InvestorDashboard() {
   const { isSwitchOn, setSelectedLoan, investorsData, setInvestorsData } = useGlobalState();
@@ -18,25 +26,34 @@ export default function InvestorDashboard() {
 
   useEffect(() => {
     let queriedData = [];
-    if (nftsDetails.data && allLoans.data) {
-      for (let transfer of (nftsDetails.data as any).landObjectUpdateds) {
-        const foundAmount = (allLoans.data as any).loanInitiliazeds.find((w: any) => transfer.tokenId === w.tokenId);
-        if (!transfer || !foundAmount) continue;
-        const harvestPerYear = Math.floor(Math.random() * 4) + 2;
-        queriedData.push({
-          tokenId: transfer.tokenId,
-          fieldSize: transfer.sizeInHectare,
-          cropData: riceData,
-          askingLoan: foundAmount.amount,
-          avgHarvestPerYear: harvestPerYear,
-          funded: 0,
-          avgTimeBetweenHarvest: Math.floor(12 / harvestPerYear),
-        });
+    const queryData = async () => {
+      if (nftsDetails.data && allLoans.data) {
+        for (let transfer of (nftsDetails.data as any).landObjectUpdateds) {
+          const foundAmount = (allLoans.data as any).loanInitiliazeds.find((w: any) => transfer.tokenId === w.tokenId);
+          if (!transfer || !foundAmount) continue;
+          const [totalFunded, _] = await publicClient.readContract({
+            address: import.meta.env.VITE_CROP_CASH_FUND,
+            abi: CropCashFundABI,
+            functionName: "loanRequests",
+            args: [BigInt(transfer.tokenId)],
+          });
+          queriedData.push({
+            tokenId: transfer.tokenId,
+            fieldSize: transfer.sizeInHectare,
+            cropData: riceData,
+            askingLoan: foundAmount.amount,
+            avgHarvestPerYear: 2,
+            funded: Number(totalFunded),
+            avgTimeBetweenHarvest: 6,
+          });
+        }
+        if (queriedData.length === investorsData.length) return;
+        setInvestorsData(queriedData);
       }
-      if (queriedData.length === investorsData.length) return;
-      setInvestorsData(queriedData);
-    }
+    };
+    queryData();
   }, [nftsDetails, allLoans]);
+
   return (
     <div className="max-w-2xl mx-auto mt-8 w-[90%] bg-white p-6 rounded">
       <div className="flex justify-between">
