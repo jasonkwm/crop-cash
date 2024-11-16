@@ -1,5 +1,6 @@
 import React from "react";
 import ProgressBar from "./ProgressBar";
+import { getFarmerNfts } from "../graphClient/graphClient";
 
 interface FarmItemProps {
   cropType: string;
@@ -59,6 +60,7 @@ const farmersCrop = [
 ];
 
 export default function FarmerDashboard() {
+  // getFarmerNfts("0x45e08d5516880eb5896334f80ba9c90318ca505c");
   return (
     <div className="max-w-2xl mx-auto mt-8 w-[90%] bg-white p-6 rounded">
       <div className="flex justify-between">
