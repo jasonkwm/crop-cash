@@ -1,6 +1,8 @@
 import { ApexOptions } from "apexcharts";
 import { useEffect, useState } from "react";
 import ApexCharts from "react-apexcharts";
+import ProgressBar from "../components/ProgressBar";
+import ReactSpeedometer from "react-d3-speedometer";
 
 interface ChartData {
   year: number;
@@ -71,6 +73,10 @@ export default function Chart() {
   const [predictedFullGrown, setPredictedFullGrown] = useState<string>("");
   const [monthsDifferenceInfo, setMonthsDiffrenceInfo] = useState<string>("");
   const [isAccordionOpen, setIsAccordionOpen] = useState<boolean>(false);
+
+  const [raisedAmount, setRaisedAmount] = useState<number>(15300);
+  const [totalAmount, setTotalAmount] = useState<number>(30000);
+  const [contributors, setContributors] = useState<number>(69);
 
   const toggleAccordion = () => {
     setIsAccordionOpen((prev) => !prev);
@@ -314,62 +320,63 @@ export default function Chart() {
   }, []);
 
   return (
-    <div className="flex overflow-x-auto justify-center items-center p-2">
+    <div className="flex overflow-x-auto justify-center items-center p- mt-32">
       <div className="w-full bg-white p-6 rounded-lg shadow-lg my-5">
         <h1 className="font-extrabold text-black text-4xl font-header">Crops Growth Graph</h1>
         <div className="grid grid-cols-12 gap-4 mt-8 text-black">
-          <div className="col-span-8">
-            <ApexCharts options={chartOptions} series={chartSeries} type="line" height={350} />
+          <div className="col-span-4 flex flex-col items-center justify-center bg-gray-100 rounded-lg p-4 h-full">
+            <h1 className="font-extrabold text-black text-4xl font-header my-3">Confidence Score</h1>
+            <ReactSpeedometer  width={300} height={200}/>
           </div>
           <div className="col-span-4 flex flex-col items-start bg-gray-100 rounded-lg p-4">
-            <h1 className="font-extrabold text-black text-4xl font-header my-3">Field Info</h1>
-
-            <div className="space-y-2 w-full">
-              <p>
-                <span className="font-semibold">Location:</span> 🇲🇾
-              </p>
-              <p>
-                <span className="font-semibold">Hectare:</span> 69 Ha
-              </p>
-              <p>
-                <span className="font-semibold">Avg. Harvests/Year:</span> 2
-              </p>
-              <p>
-                <span className="font-semibold">Avg. Time Between Harvests:</span> 6 months
-              </p>
-              <p>
-                <span className="font-semibold">EST. next full Grown: </span> {predictedFullGrown} (in{" "}
-                {monthsDifferenceInfo} months)
-              </p>
-            </div>
-
-            {/* Horizontal line divider */}
-            <div className="relative flex py-5 items-center w-full">
-              <div className="flex-grow border-t-4 border-black"></div>
-              <span className="flex-shrink mx-4 text-black">Funding info</span>
-              <div className="flex-grow border-t-4 border-black"></div>
-            </div>
-
             {/* Contributors section */}
             <div className="w-full space-y-2">
+              <h1 className="font-extrabold text-black text-4xl font-header my-3 text-center">Funding</h1>
+
               <p>
                 <span className="font-semibold">Contributors:</span> 69
               </p>
+              <ProgressBar funded={raisedAmount} total={totalAmount} />
+              <button className="text-white bg-green-500">
+                Contribute now!
+              </button>
+            </div>
+          </div>
+          <div className="col-span-4 flex flex-col items-start bg-gray-100 rounded-lg p-4">
+            <div className="w-full space-y-2">
+              <h1 className="font-extrabold text-black text-4xl font-header my-3 text-center">Field Info</h1>
 
-              <div className="flex justify-between mb-1">
-                <span className="text-base font-medium text-black">Progress (13,500 USD / 30,000 USD)</span>
-                <span className="text-sm font-medium text-green-700 text-black">45%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-4 dark:bg-gray-700">
-                <div className="bg-green-600 h-4 rounded-full" style={{ width: "45%" }}></div>
+              <div className="space-y-2 w-full">
+                <p>
+                  <span className="font-semibold">Location:</span> 🇲🇾
+                </p>
+                <p>
+                  <span className="font-semibold">Hectare:</span> 69 Ha
+                </p>
+                <p>
+                  <span className="font-semibold">Avg. Harvests/Year:</span> 2
+                </p>
+                <p>
+                  <span className="font-semibold">Avg. Time Between Harvests:</span> 6 months
+                </p>
+                <p>
+                  <span className="font-semibold">EST. next full Grown: </span> {predictedFullGrown} (in{" "}
+                  {monthsDifferenceInfo} months)
+                </p>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="col-span-12 my-3">
+          <div className="w-full h-96">
+            <ApexCharts options={chartOptions} series={chartSeries} type="line" height="100%" />
           </div>
         </div>
         {/* Accordion Toggle Button */}
         <h1 className="font-extrabold text-black text-4xl font-header my-5">Satellite Images</h1>
         <button onClick={toggleAccordion} className="text-white bg-blue-500 p-2 mb-4">
-          {isAccordionOpen ? "Hide Satellite Images" : "Show Satellite Images"}
+          {isAccordionOpen ? "Hide Satellite Images (Click to hide)" : "Show Satellite Images (Click to expand)"}
         </button>
 
         {/* Accordion content */}
@@ -380,19 +387,19 @@ export default function Chart() {
                 if (entry.path && !entry.repeat) {
                   return (
                     <div
-                    key={index}
-                    className="flex-none bg-white p-4 rounded-lg shadow-lg w-64 max-w-xs my-3 hover:shadow-2xl transition-shadow"
-                  >
-                    <img
-                      src={`/${entry.path}`}
-                      alt={`Image from ${entry.year}-${entry.month}-${entry.day}`}
-                      className="w-full h-48 object-cover rounded-lg mb-4"
-                    />
-                    <p className="text-lg font-semibold text-gray-800">NDVI: {entry.value}</p>
-                    <p className="text-sm text-gray-500">
-                      {entry.year}-{entry.month}-{entry.day}
-                    </p>
-                  </div>
+                      key={index}
+                      className="flex-none bg-white p-4 rounded-lg shadow-lg w-64 max-w-xs my-3 hover:shadow-2xl transition-shadow"
+                    >
+                      <img
+                        src={`/${entry.path}`}
+                        alt={`Image from ${entry.year}-${entry.month}-${entry.day}`}
+                        className="w-full h-48 object-cover rounded-lg mb-4"
+                      />
+                      <p className="text-lg font-semibold text-gray-800">NDVI: {entry.value}</p>
+                      <p className="text-sm text-gray-500">
+                        {entry.year}-{entry.month}-{entry.day}
+                      </p>
+                    </div>
                   );
                 }
                 return null;
