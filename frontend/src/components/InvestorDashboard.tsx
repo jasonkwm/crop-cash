@@ -19,7 +19,7 @@ const publicClient = createPublicClient({
 });
 
 export default function InvestorDashboard() {
-  const { isSwitchOn, setSelectedLoan, investorsData, setInvestorsData } = useGlobalState();
+  const { setSelectedLoan, investorsData, setInvestorsData } = useGlobalState();
   const nftsDetails = getFarmerNftDetails();
   const allLoans = getAllLoanNfts();
   const navigate = useNavigate();
