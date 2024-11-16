@@ -4,6 +4,12 @@ import ApexCharts from "react-apexcharts";
 import ProgressBar from "../components/ProgressBar";
 import ReactSpeedometer from "react-d3-speedometer";
 import { useGlobalState } from "../context/GlobalStateProvider";
+import { useMintUSDC } from "../hooks/useMintUSDC";
+import { CropCashUSDCABI } from "../abis/CropCashUSDC";
+import { createPublicClient, http } from "viem";
+import { scrollSepolia } from "viem/chains";
+import { useWeb3Auth } from "../context/Web3AuthProvider";
+import { useContribute } from "../hooks/useContribute";
 
 interface ChartData {
   year: number;
@@ -67,6 +73,11 @@ interface ChartSeries {
   data: number[];
 }
 
+const publicClient = createPublicClient({
+  chain: scrollSepolia,
+  transport: http(),
+});
+
 export default function Chart() {
   const [data, setData] = useState<ChartData[]>([]);
   const [chartOptions, setChartOptions] = useState<ApexOptions>({} as ApexOptions);
@@ -74,15 +85,62 @@ export default function Chart() {
   const [predictedFullGrown, setPredictedFullGrown] = useState<string>("");
   const [monthsDifferenceInfo, setMonthsDiffrenceInfo] = useState<string>("");
   const [isAccordionOpen, setIsAccordionOpen] = useState<boolean>(false);
+  const [usdcBalance, setUsdcBalance] = useState(0);
+  const [contributionAmount, setContributionAmount] = useState(0);
   const { selectedLoan } = useGlobalState();
+  const [raisedAmount, setRaisedAmount] = useState(selectedLoan.funded);
+  const { smartWalletAddress } = useWeb3Auth();
 
-  const raisedAmount = selectedLoan.funded;
+  console.log("selectedLoan", selectedLoan);
+
+  const { mintUSDC } = useMintUSDC();
+  const { contribute } = useContribute();
+
+  useEffect(() => {
+    const getUSDCBalance = async () => {
+      if (!smartWalletAddress) return;
+      const data = await publicClient.readContract({
+        address: import.meta.env.VITE_CROP_CASH_USDC,
+        abi: CropCashUSDCABI,
+        functionName: "balanceOf",
+        args: [smartWalletAddress as `0x${string}`],
+      });
+      console.log("smartWalletAddress", smartWalletAddress);
+      console.log("balance", data);
+      setUsdcBalance(Number(data));
+    };
+    getUSDCBalance();
+  }, [smartWalletAddress]);
+
+  const handleMintUSDC = async () => {
+    await mintUSDC();
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const data = await publicClient.readContract({
+      address: import.meta.env.VITE_CROP_CASH_USDC,
+      abi: CropCashUSDCABI,
+      functionName: "balanceOf",
+      args: [smartWalletAddress as `0x${string}`],
+    });
+    setUsdcBalance(Number(data));
+  };
+
+  const handleContribute = async () => {
+    await contribute(selectedLoan.tokenId, contributionAmount);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const data = await publicClient.readContract({
+      address: import.meta.env.VITE_CROP_CASH_USDC,
+      abi: CropCashUSDCABI,
+      functionName: "balanceOf",
+      args: [smartWalletAddress as `0x${string}`],
+    });
+    setUsdcBalance(Number(data));
+    setRaisedAmount((prev: number) => prev + contributionAmount);
+  };
+
   const totalAmount = selectedLoan.askingLoan;
   // const contributors = 69;
 
   const confidenceValue = 41;
-
-  const [contributionAmount, setContributionAmount] = useState(0);
 
   const handleContributionClick = (amount: number) => {
     setContributionAmount(amount);
@@ -380,6 +438,7 @@ export default function Chart() {
               <ProgressBar funded={raisedAmount} total={totalAmount} />
 
               {/* Input field for contribution amount */}
+              <p className="text-xs">Balance: ${usdcBalance}</p>
               <input
                 type="number"
                 value={contributionAmount} // Bind the input value to contributionAmount
@@ -411,7 +470,9 @@ export default function Chart() {
               </div>
 
               {/* Contribute button */}
-              <button className="w-full text-white bg-green-700 py-2 rounded">Contribute now!</button>
+              <button className="w-full text-white bg-green-700 py-2 rounded" onClick={handleContribute}>
+                Contribute now!
+              </button>
             </div>
           </div>
 
@@ -462,33 +523,36 @@ export default function Chart() {
 
         {/* Accordion content */}
         {isAccordionOpen && (
-          <div className="flex overflow-x-auto space-x-6 scrollbar-hide max-h-80 overflow-y-hidden">
-            {data.length > 0 ? (
-              data.map((entry: ChartData, index) => {
-                if (entry.path && !entry.repeat) {
-                  return (
-                    <div
-                      key={index}
-                      className="flex-none bg-white p-4 rounded-lg shadow-lg w-64 max-w-xs my-3 hover:shadow-2xl transition-shadow"
-                    >
-                      <img
-                        src={`/${entry.path}`}
-                        alt={`Image from ${entry.year}-${entry.month}-${entry.day}`}
-                        className="w-full h-48 object-cover rounded-lg mb-4"
-                      />
-                      <p className="text-lg font-semibold text-gray-800">NDVI: {entry.value}</p>
-                      <p className="text-sm text-gray-500">
-                        {entry.year}-{entry.month}-{entry.day}
-                      </p>
-                    </div>
-                  );
-                }
-                return null;
-              })
-            ) : (
-              <p>No data available</p>
-            )}
-          </div>
+          <>
+            <div className="flex overflow-x-auto space-x-6 scrollbar-hide max-h-80 overflow-y-hidden">
+              {data.length > 0 ? (
+                data.map((entry: ChartData, index) => {
+                  if (entry.path && !entry.repeat) {
+                    return (
+                      <div
+                        key={index}
+                        className="flex-none bg-white p-4 rounded-lg shadow-lg w-64 max-w-xs my-3 hover:shadow-2xl transition-shadow"
+                      >
+                        <img
+                          src={`/${entry.path}`}
+                          alt={`Image from ${entry.year}-${entry.month}-${entry.day}`}
+                          className="w-full h-48 object-cover rounded-lg mb-4"
+                        />
+                        <p className="text-lg font-semibold text-gray-800">NDVI: {entry.value}</p>
+                        <p className="text-sm text-gray-500">
+                          {entry.year}-{entry.month}-{entry.day}
+                        </p>
+                      </div>
+                    );
+                  }
+                  return null;
+                })
+              ) : (
+                <p>No data available</p>
+              )}
+            </div>
+            <button onClick={handleMintUSDC}>Mint CropCashUSDC</button>
+          </>
         )}
       </div>
     </div>

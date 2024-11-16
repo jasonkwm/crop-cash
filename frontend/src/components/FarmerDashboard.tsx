@@ -57,15 +57,14 @@ export default function FarmerDashboard() {
           (w: any) => transfer.tokenId === w.tokenId
         );
         if (!foundDetails || !foundAmount) continue;
-        const harvestPerYear = Math.floor(Math.random() * 4) + 2;
         farmerLands.push({
           tokenId: foundDetails.tokenId,
           fieldSize: foundDetails.sizeInHectare,
           cropData: riceData,
           askingLoan: foundAmount.amount,
-          avgHarvestPerYear: harvestPerYear,
+          avgHarvestPerYear: 2,
           funded: 0,
-          avgTimeBetweenHarvest: Math.floor(12 / harvestPerYear),
+          avgTimeBetweenHarvest: 6,
         });
       }
       if (farmerLands.length === farmersData.length) return;
