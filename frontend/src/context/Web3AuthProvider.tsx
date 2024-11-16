@@ -4,12 +4,12 @@ import { decodeToken, Web3Auth } from "@web3auth/single-factor-auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import RPC from "../rpcs/ethersRPC";
 import { CredentialResponse, googleLogout } from "@react-oauth/google";
-import { PasskeysPlugin } from "@web3auth/passkeys-sfa-plugin";
+import { ListPasskeyResponse, PasskeysPlugin } from "@web3auth/passkeys-sfa-plugin";
 import { WalletServicesPlugin } from "@web3auth/wallet-services-plugin";
 import { shouldSupportPasskey } from "../utils";
 import { AuthUserInfo } from "@web3auth/auth";
 import { ethers } from "ethers";
-import { createPaymaster, createSmartAccountClient, IPaymaster } from "@biconomy/account";
+import { BiconomySmartAccountV2, createPaymaster, createSmartAccountClient, IPaymaster } from "@biconomy/account";
 
 const clientId = "BMOtGZg6Gtzh3MbWIgs8EJzl5Ig-tSFaPkULxG3HKm2jpUVVrH4HudSraHzHl73dm64WJ3qiowXvW_0xoinv8wM";
 const verifier = "banana-google";
@@ -17,7 +17,7 @@ const verifier = "banana-google";
 const chainConfig: any = {
   chainNamespace: CHAIN_NAMESPACES.EIP155,
   chainId: "0x8274f", // Please use 0x1 for Mainnet
-  rpcTarget: "https://sepolia-rpc.scroll.io",
+  rpcTarget: "https://scroll-sepolia-rpc.publicnode.com",
   displayName: "Scroll Sepolia",
   blockExplorerUrl: "https://sepolia.scrollscan.com/",
   ticker: "ETH",
@@ -36,15 +36,24 @@ const web3authSfa = new Web3Auth({
 
 web3authSfa.init();
 
-type Web3AuthProvider = {
-  provider: any;
-  setProvider: (value: any) => void;
+export type Web3AuthProviderType = {
+  onSuccess: (
+    response: CredentialResponse
+  ) => Promise<"Web3Auth Single Factor Auth SDK not initialized yet" | "Login Sucessful" | undefined>;
+  loginWithPasskey: () => Promise<string>;
+  logout: () => Promise<"Web3Auth Single Factor Auth SDK not initialized yet" | "Logout sucessful">;
+  authenticateUser: () => Promise<any>;
+  registerPasskey: () => Promise<
+    "Browser not supported" | "plugin not initialized yet" | "Passkey saved successfully" | undefined
+  >;
+  listAllPasskeys: () => Promise<"plugin not initialized yet" | ListPasskeyResponse[]>;
+  smartWallet: BiconomySmartAccountV2 | undefined;
+  setSmartWallet: React.Dispatch<React.SetStateAction<BiconomySmartAccountV2 | undefined>>;
+  smartWalletAddress: string;
+  setSmartWalletAddress: React.Dispatch<React.SetStateAction<string>>;
+  provider: IProvider | null;
   web3authSFAuth: any;
-  setWeb3authSFAuth: any;
-  pkPlugin: any;
-  setPkPlugin: any;
   wsPlugin: any;
-  setWsPlugin: any;
   isLoggingIn: any;
   setIsLoggingIn: any;
   userInfo: any;
@@ -55,7 +64,7 @@ type Web3AuthProvider = {
   setUserBalance: any;
 };
 
-const Web3AuthContext = createContext<any>(undefined);
+export const Web3AuthContext = createContext<Web3AuthProviderType | null>(null);
 
 export const Web3AuthProvider = ({ children }: { children: any }) => {
   const [web3authSFAuth, setWeb3authSFAuth] = useState<Web3Auth | null>(null);
@@ -66,7 +75,7 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
   const [userAccount, setUserAccount] = useState<string>("");
   const [userBalance, setUserBalance] = useState<string>("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [smartWallet, setSmartWallet] = useState<any>(null);
+  const [smartWallet, setSmartWallet] = useState<BiconomySmartAccountV2>();
   const [smartWalletAddress, setSmartWalletAddress] = useState("");
 
   useEffect(() => {
@@ -107,7 +116,7 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
           setUserInfo(null);
           setUserAccount("");
           setUserBalance("");
-          setSmartWallet(null);
+          setSmartWallet(undefined);
           setSmartWalletAddress("");
         });
         await web3authSfa.init();
@@ -233,10 +242,10 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
     setUserBalance(balance);
     const biconomyConfig = {
       biconomyPaymasterApiKey: import.meta.env.VITE_BICONOMY_PAYMASTER_API_KEY,
-      bundleUrl: `https://bundler.biconomy.io/api/v3/534351/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44`,
+      bundleUrl: `https://bundler.biconomy.io/api/v2/534351/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44`,
     };
     if (web3AuthSfaParam && web3AuthSfaParam?.connected && provider) {
-      const ethersProvider = new ethers.BrowserProvider(provider as IProvider);
+      const ethersProvider = new ethers.providers.Web3Provider(provider);
 
       const paymaster: IPaymaster = await createPaymaster({
         paymasterUrl: `https://paymaster.biconomy.io/api/v1/534351/${biconomyConfig.biconomyPaymasterApiKey}`,
@@ -248,11 +257,11 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
         // paymasterUrl: `https://paymaster.biconomy.io/api/v1/84532/${biconomyConfig.biconomyPaymasterApiKey}`,
         bundlerUrl: biconomyConfig.bundleUrl,
         paymaster: paymaster,
-        rpcUrl: "https://sepolia.scrollscan.com/",
+        rpcUrl: "https://scroll-sepolia-rpc.publicnode.com",
         chainId: 534351,
       });
 
-      const swAddress = await sw.getAccountAddress();
+      const swAddress = await sw.getAddress();
       setSmartWallet(sw);
       setSmartWalletAddress(swAddress);
     }
@@ -295,7 +304,7 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
 };
 
 export const useWeb3Auth = () => {
-  const context = useContext(Web3AuthContext);
+  const context = useContext(Web3AuthContext) as Web3AuthProviderType;
   if (context === undefined) {
     throw new Error("useWeb3Auth must be used within a Web3AuthProvider");
   }

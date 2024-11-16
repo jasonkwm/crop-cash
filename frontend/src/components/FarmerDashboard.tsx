@@ -1,7 +1,64 @@
 import ProgressBar from "./ProgressBar";
 import { useGlobalState } from "../context/GlobalStateProvider";
+import { useEffect } from "react";
+import { getFarmerNftDetails, getFarmerNfts, getLoanInitializeds } from "../graphClient/graphClient";
+import { useWeb3Auth } from "../context/Web3AuthProvider";
+
+// const farmersCrop = [
+//   {
+//     id: 1,
+//     cropData: cropData[0],
+//     fieldSize: 10.3,
+//     funded: 5620,
+//     askingLoan: 10.3 * (cropData[0].tonPerHectare * cropData[0].pricePerTon),
+//     avgHarvestPerYear: 2,
+//     avgTimeBetweenHarvest: 6, // In months
+//     estFullGrownDate: "", // String
+//   },
+//   {
+//     id: 2,
+//     cropData: cropData[1],
+//     fieldSize: 8.1,
+//     funded: 23000,
+//     askingLoan: 8.1 * (cropData[1].tonPerHectare * cropData[1].pricePerTon),
+//     avgHarvestPerYear: 2,
+//     avgTimeBetweenHarvest: 6, // In months
+//     estFullGrownDate: "", // String
+//   },
+// ];
+
+type FarmerLand = {
+  tokenId: number;
+  size: number;
+  amount: number;
+};
 
 export default function FarmerDashboard() {
+  const { smartWalletAddress } = useWeb3Auth();
+  const farmerNfts = getFarmerNfts(smartWalletAddress);
+  const nftsDetails = getFarmerNftDetails();
+  const loanInitialized = getLoanInitializeds(smartWalletAddress);
+
+  let farmerLands: FarmerLand[] = [];
+  if (farmerNfts.data && nftsDetails.data) {
+    for (let transfer of (farmerNfts.data as any).transfers) {
+      const foundDetails = (nftsDetails.data as any).landObjectUpdateds.find(
+        (w: any) => transfer.tokenId === w.tokenId
+      );
+      const foundAmount = (loanInitialized.data as any).loanInitiliazeds.find(
+        (w: any) => transfer.tokenId === w.tokenId
+      );
+      if (!foundDetails || !foundAmount) continue;
+      farmerLands.push({
+        tokenId: foundDetails.tokenId,
+        size: foundDetails.sizeInHectare,
+        amount: foundAmount.amount,
+      });
+    }
+  }
+
+  console.log("landswithsize", farmerLands);
+
   const { farmersData } = useGlobalState();
   return (
     <div className="max-w-2xl mx-auto mt-8 w-[90%] bg-white p-6 rounded">

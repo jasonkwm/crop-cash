@@ -5,8 +5,8 @@ import { useGlobalState } from "../context/GlobalStateProvider";
 // import { useWeb3Auth } from "../context/Web3AuthProvider";
 
 export default function Home() {
+  // const { employee, setEmployee } = useGlobalState();
   const { isSwitchOn } = useGlobalState();
-
   return isSwitchOn ? <FarmerDashboard /> : <InvestorDashboard />;
 }
 

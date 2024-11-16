@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { GoogleMap, LoadScript, Marker, Polygon } from "@react-google-maps/api";
 import * as geometry from "spherical-geometry-js";
+import { useSignAttestation } from "../hooks/useSignAttestation";
+import { useApplyLoan } from "../hooks/useApplyLoan";
+import { useNavigate } from "react-router-dom";
 
 // Function to calculate the area of a polygon in hectares
 function calculateAreaHectares(coords: any) {
@@ -17,6 +20,67 @@ function calculateAreaHectares(coords: any) {
   }
 }
 
+const polygonOptions = {
+  fillColor: "#00FF00",
+  fillOpacity: 0.4,
+  strokeColor: "#00FF00",
+  strokeOpacity: 0.8,
+  strokeWeight: 2,
+};
+
+const cropOptions = [
+  {
+    cropType: "🍚 Rice",
+    tonPerHectare: 4,
+    pricePerTon: 269,
+  },
+  {
+    cropType: "🌾 Wheat",
+    tonPerHectare: 3,
+    pricePerTon: 250,
+  },
+  {
+    cropType: "🥔 Potato",
+    tonPerHectare: 30,
+    pricePerTon: 250,
+  },
+  {
+    cropType: "🥕 Carrot",
+    tonPerHectare: 25,
+    pricePerTon: 500,
+  },
+  {
+    cropType: "🍌 Banana",
+    tonPerHectare: 25,
+    pricePerTon: 700,
+  },
+  {
+    cropType: "🍅 Tomato",
+    tonPerHectare: 40,
+    pricePerTon: 600,
+  },
+  {
+    cropType: "🥬 Cabbage",
+    tonPerHectare: 40,
+    pricePerTon: 250,
+  },
+  {
+    cropType: "🍓 Strawberry",
+    tonPerHectare: 40,
+    pricePerTon: 250,
+  },
+];
+
+const center = {
+  lat: 5.350846,
+  lng: 100.201144,
+};
+
+const mapContainerStyle = {
+  width: "100%",
+  height: "400px",
+};
+
 const ApplyLoan = () => {
   const [markers, setMarkers] = useState<any>([]);
   const [cropType, setCropType] = useState<string>("");
@@ -24,67 +88,21 @@ const ApplyLoan = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [status, setStatus] = useState<number>(0);
   const [landOwnership, setLandOwnership] = useState<File | null>(null);
+  const [landAttested, setLandAttested] = useState(false);
 
-  const mapContainerStyle = {
-    width: "100%",
-    height: "400px",
+  const { createLandAttestation, attestionId } = useSignAttestation();
+  const { applyLoan, appliedDone } = useApplyLoan();
+  const navigate = useNavigate();
+
+  const handleCreateLandAttestation = async () => {
+    await createLandAttestation(
+      `[${markers[0].lat},${markers[0].lng}]`,
+      `[${markers[1].lat},${markers[1].lng}]`,
+      `[${markers[2].lat},${markers[2].lng}]`,
+      `[${markers[3].lat},${markers[3].lng}]`,
+      Math.ceil(calculateAreaHectares(markers))
+    );
   };
-
-  const center = {
-    lat: 5.350846,
-    lng: 100.201144,
-  };
-
-  const polygonOptions = {
-    fillColor: "#00FF00",
-    fillOpacity: 0.4,
-    strokeColor: "#00FF00",
-    strokeOpacity: 0.8,
-    strokeWeight: 2,
-  };
-
-  const cropOptions = [
-    {
-      cropType: "🍚 Rice",
-      tonPerHectare: 4,
-      pricePerTon: 269,
-    },
-    {
-      cropType: "🌾 Wheat",
-      tonPerHectare: 3,
-      pricePerTon: 250,
-    },
-    {
-      cropType: "🥔 Potato",
-      tonPerHectare: 30,
-      pricePerTon: 250,
-    },
-    {
-      cropType: "🥕 Carrot",
-      tonPerHectare: 25,
-      pricePerTon: 500,
-    },
-    {
-      cropType: "🍌 Banana",
-      tonPerHectare: 25,
-      pricePerTon: 700,
-    },
-    {
-      cropType: "🍅 Tomato",
-      tonPerHectare: 40,
-      pricePerTon: 600,
-    },
-    {
-      cropType: "🥬 Cabbage",
-      tonPerHectare: 40,
-      pricePerTon: 250,
-    },
-    {
-      cropType: "🍓 Strawberry",
-      tonPerHectare: 40,
-      pricePerTon: 250,
-    },
-  ];
 
   const handleMapClick = (event: any) => {
     const lat = event.latLng.lat();
@@ -99,7 +117,7 @@ const ApplyLoan = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setLoading(true);
     setStatus(0); // Reset status to an array of zeros
 
@@ -119,6 +137,10 @@ const ApplyLoan = () => {
         }, 1000);
       }, 1000);
     }, 1000);
+
+    await applyLoan(Number(attestionId), loanAmount);
+
+    navigate("/");
   };
 
   return (
@@ -160,7 +182,7 @@ const ApplyLoan = () => {
         {/* Step 2: Upload Land Ownership Document */}
         <div
           className={`transition-all duration-500 transform ${
-            markers.length >= 4 && !cropType && !landOwnership
+            markers.length >= 4 && !cropType && (!landOwnership || !landAttested)
               ? "opacity-100 translate-x-0 mt-4"
               : "opacity-0 translate-x-full absolute"
           }`}
@@ -188,6 +210,28 @@ const ApplyLoan = () => {
                     cursor-pointer"
                 />
                 <p className="text-xs text-gray-500">Only PDF files are accepted. Maximum size: 5MB</p>
+                {markers.map((v: any, i: number) => (
+                  <p key={i} className="text-xs text-black">
+                    Marker #{i}: {"["}
+                    {v.lat},{v.lng}
+                    {"]"}
+                  </p>
+                ))}
+                {attestionId !== "" && (
+                  <a
+                    href={`https://testnet-scan.sign.global/attestation/onchain_evm_534351_${attestionId}`}
+                    target="_blank"
+                  >
+                    View attestation
+                  </a>
+                )}
+                {attestionId !== "" ? (
+                  <button onClick={() => setLandAttested(true)}>Next</button>
+                ) : (
+                  <button disabled={!landOwnership} onClick={handleCreateLandAttestation}>
+                    Attest
+                  </button>
+                )}
               </div>
             </div>
           )}
@@ -196,7 +240,7 @@ const ApplyLoan = () => {
         {/* Step 3: Select Crop Type */}
         <div
           className={`transition-all duration-500 transform ${
-            markers.length >= 4 && !cropType && landOwnership
+            markers.length >= 4 && !cropType && landOwnership && landAttested
               ? "opacity-100 translate-x-0"
               : "opacity-0 translate-x-full absolute"
           }`}
@@ -206,7 +250,7 @@ const ApplyLoan = () => {
               <h2 className="text-xl font-bold text-gray-800 mb-4">Step 3: Select Your Crop</h2>
               <div className="mb-4">
                 <span className="text-gray-700">
-                  Farm size: <span className="font-semibold">{calculateAreaHectares(markers).toFixed(1)} hectares</span>
+                  Farm size: <span className="font-semibold">{Math.ceil(calculateAreaHectares(markers))} hectares</span>
                 </span>
               </div>
               <select
@@ -238,7 +282,7 @@ const ApplyLoan = () => {
               <h2 className="text-xl font-bold text-gray-800 mb-4">Step 4: Select Loan Amount</h2>
               <div className="flex flex-col mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
                 <span className="text-gray-700">
-                  Farm size: <span className="font-semibold">{calculateAreaHectares(markers).toFixed(1)} hectares</span>
+                  Farm size: <span className="font-semibold">{Math.ceil(calculateAreaHectares(markers))} hectares</span>
                 </span>
                 <span className="text-gray-700">
                   Crop: <span className="font-semibold">{cropType}</span>
@@ -298,7 +342,7 @@ const ApplyLoan = () => {
             loading ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full absolute"
           }`}
         >
-          {loading && (
+          {loading && appliedDone && (
             <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-lg border border-gray-200">
               <h2 className="text-xl font-bold text-gray-800 mb-4">Processing Your Application</h2>
               <div className="space-y-4">
