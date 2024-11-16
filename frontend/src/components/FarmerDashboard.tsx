@@ -13,9 +13,6 @@ const FarmItem: React.FC<FarmItemProps> = ({ cropType, fieldSize, tonPerHectare,
   // Calculate total revenue
   const totalRevenue = fieldSize * tonPerHectare * pricePerTon;
 
-  // Progress bar percentage
-  const progressPercentage = Math.min((funded / totalRevenue) * 100, 100);
-
   return (
     <div className="bg-[#F8F8F8] shadow-md rounded-md p-4 mb-4">
       <div className="flex justify-between items-end">
