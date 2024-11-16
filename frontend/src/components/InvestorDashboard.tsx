@@ -41,7 +41,7 @@ export default function InvestorDashboard() {
     <div className="max-w-2xl mx-auto mt-8 w-[90%] bg-white p-6 rounded">
       <div className="flex justify-between">
         <h1 className="text-2xl font-bold text-gray-800 mb-6">Investors Dashboard</h1>
-        {isSwitchOn && (
+        {!isSwitchOn && (
           <a href="/apply-loan" className="text-black hover:text-black">
             <button className="bg-blue-400">Apply Loan</button>
           </a>
