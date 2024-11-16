@@ -22,7 +22,7 @@ export const useApplyLoan = () => {
       to: import.meta.env.VITE_CROP_CASH_CONSUMER,
       data: encodedCall,
     };
-
+    console.log("smartWallet", smartWallet);
     const { waitForTxHash } = (await smartWallet?.sendTransaction(tx, {
       paymasterServiceData: { mode: PaymasterMode.SPONSORED },
     })) as UserOpResponse;

@@ -91,7 +91,7 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
           usePnPKey: false, // Setting this to true returns the same key as PnP Web SDK, By default, this SDK returns CoreKitKey.
           privateKeyProvider: ethereumPrivateKeyProvider,
         });
-        const plugin = new PasskeysPlugin({ buildEnv: "testing", rpID: "crop-cash.vercel.app" });
+        const plugin = new PasskeysPlugin({ buildEnv: "testing" });
         web3authSfa?.addPlugin(plugin);
         setPkPlugin(plugin);
         const wsPlugin = new WalletServicesPlugin({
@@ -252,7 +252,7 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
         strictMode: false,
       });
       const sw = await createSmartAccountClient({
-        signer: (await ethersProvider.getSigner()) as any,
+        signer: ethersProvider.getSigner() as any,
         biconomyPaymasterApiKey: biconomyConfig.biconomyPaymasterApiKey,
         // paymasterUrl: `https://paymaster.biconomy.io/api/v1/84532/${biconomyConfig.biconomyPaymasterApiKey}`,
         bundlerUrl: biconomyConfig.bundleUrl,

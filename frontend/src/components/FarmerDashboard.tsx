@@ -1,8 +1,8 @@
 import ProgressBar from "./ProgressBar";
 import { useGlobalState } from "../context/GlobalStateProvider";
-import { useEffect } from "react";
 import { getFarmerNftDetails, getFarmerNfts, getLoanInitializeds } from "../graphClient/graphClient";
 import { useWeb3Auth } from "../context/Web3AuthProvider";
+import { useEffect } from "react";
 
 // const farmersCrop = [
 //   {
@@ -27,10 +27,16 @@ import { useWeb3Auth } from "../context/Web3AuthProvider";
 //   },
 // ];
 
-type FarmerLand = {
-  tokenId: number;
-  size: number;
-  amount: number;
+// type FarmerLand = {
+//   tokenId: number;
+//   size: number;
+//   amount: number;
+// };
+
+const riceData = {
+  cropType: "🍚 Rice",
+  tonPerHectare: 4,
+  pricePerTon: 269,
 };
 
 export default function FarmerDashboard() {
@@ -38,28 +44,38 @@ export default function FarmerDashboard() {
   const farmerNfts = getFarmerNfts(smartWalletAddress);
   const nftsDetails = getFarmerNftDetails();
   const loanInitialized = getLoanInitializeds(smartWalletAddress);
+  const { farmersData, setFarmersData } = useGlobalState();
 
-  let farmerLands: FarmerLand[] = [];
-  if (farmerNfts.data && nftsDetails.data) {
-    for (let transfer of (farmerNfts.data as any).transfers) {
-      const foundDetails = (nftsDetails.data as any).landObjectUpdateds.find(
-        (w: any) => transfer.tokenId === w.tokenId
-      );
-      const foundAmount = (loanInitialized.data as any).loanInitiliazeds.find(
-        (w: any) => transfer.tokenId === w.tokenId
-      );
-      if (!foundDetails || !foundAmount) continue;
-      farmerLands.push({
-        tokenId: foundDetails.tokenId,
-        size: foundDetails.sizeInHectare,
-        amount: foundAmount.amount,
-      });
+  useEffect(() => {
+    let farmerLands = [];
+    console.log("farmersData.length", farmersData.length);
+    if (farmersData.length !== 0) return;
+    console.log("here");
+    if (farmerNfts.data && nftsDetails.data && loanInitialized.data) {
+      for (let transfer of (farmerNfts.data as any).transfers) {
+        const foundDetails = (nftsDetails.data as any).landObjectUpdateds.find(
+          (w: any) => transfer.tokenId === w.tokenId
+        );
+        const foundAmount = (loanInitialized.data as any).loanInitiliazeds.find(
+          (w: any) => transfer.tokenId === w.tokenId
+        );
+        if (!foundDetails || !foundAmount) continue;
+        const harvestPerYear = Math.floor(Math.random() * 4) + 2;
+        farmerLands.push({
+          tokenId: foundDetails.tokenId,
+          fieldSize: foundDetails.sizeInHectare,
+          cropData: riceData,
+          askingLoan: foundAmount.amount,
+          avgHarvestPerYear: harvestPerYear,
+          funded: 0,
+          avgTimeBetweenHarvest: Math.floor(12 / harvestPerYear),
+        });
+      }
+      console.log("farmerLands", farmerLands);
+      setFarmersData(farmerLands);
     }
-  }
+  }, [nftsDetails, farmerNfts]);
 
-  console.log("landswithsize", farmerLands);
-
-  const { farmersData } = useGlobalState();
   return (
     <div className="max-w-2xl mx-auto mt-8 w-[90%] bg-white p-6 rounded">
       <div className="flex justify-between">
@@ -74,7 +90,7 @@ export default function FarmerDashboard() {
             <div>
               <h3 className="text-lg font-semibold text-gray-800 mb-2">Crop: {fData.cropData.cropType}</h3>
               <p className="text-gray-600">
-                <strong>Field Size:</strong> {fData.fieldSize.toFixed(2)} hectares
+                <strong>Field Size:</strong> {fData.fieldSize} hectares
               </p>
               <p className="text-gray-600">
                 <strong>Tons per Hectare:</strong> {fData.cropData.tonPerHectare} tons
@@ -83,7 +99,7 @@ export default function FarmerDashboard() {
                 <strong>Market Price per Ton:</strong> ${fData.cropData.pricePerTon}
               </p>
               <p className="text-gray-600">
-                <strong>Total Revenue:</strong> ${fData.askingLoan.toLocaleString()}
+                <strong>Total Revenue:</strong> ${fData.askingLoan}
               </p>
             </div>
             <div className="flex flex-col gap-2">
@@ -91,7 +107,7 @@ export default function FarmerDashboard() {
               <button className="bg-green-400">Claim</button>
             </div>
           </div>
-          <ProgressBar funded={fData.funded} total={fData.askingLoan} />
+          <ProgressBar funded={Number(fData.funded)} total={Number(fData.askingLoan)} />
         </div>
       ))}
     </div>
