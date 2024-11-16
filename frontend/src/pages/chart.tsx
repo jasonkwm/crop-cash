@@ -1,3 +1,4 @@
+import { ApexOptions } from "apexcharts";
 import { useEffect, useState } from "react";
 import ApexCharts from "react-apexcharts";
 
@@ -10,53 +11,53 @@ interface ChartData {
   repeat: boolean;
 }
 
-interface ChartOptions {
-  chart: {
-    id: string;
-    type: string;
-    height: number;
-  };
-  stroke: {
-    curve: string;
-  };
-  xaxis: {
-    categories: string[];
-    title: {
-      text: string;
-    };
-  };
-  yaxis: {
-    title: {
-      text: string;
-    };
-  };
-  title: {
-    text: string;
-    align: string;
-  };
-  grid: {
-    borderColor: string;
-  };
-  annotations: {
-    points: {
-      x: string;
-      y: number;
-      marker: {
-        size: number;
-        fillColor: string;
-        strokeColor: string;
-      };
-      label: {
-        text: string;
-        style: {
-          color: string;
-          background: string;
-          fontSize: string;
-        };
-      };
-    }[];
-  };
-}
+// interface ChartOptions {
+//   chart: {
+//     id: string;
+//     type: string;
+//     height: number;
+//   };
+//   stroke: {
+//     curve: string;
+//   };
+//   xaxis: {
+//     categories: string[];
+//     title: {
+//       text: string;
+//     };
+//   };
+//   yaxis: {
+//     title: {
+//       text: string;
+//     };
+//   };
+//   title: {
+//     text: string;
+//     align: string;
+//   };
+//   grid: {
+//     borderColor: string;
+//   };
+//   annotations: {
+//     points: {
+//       x: string;
+//       y: number;
+//       marker: {
+//         size: number;
+//         fillColor: string;
+//         strokeColor: string;
+//       };
+//       label: {
+//         text: string;
+//         style: {
+//           color: string;
+//           background: string;
+//           fontSize: string;
+//         };
+//       };
+//     }[];
+//   };
+// }
 
 interface ChartSeries {
   name: string;
@@ -65,7 +66,7 @@ interface ChartSeries {
 
 export default function Chart() {
   const [data, setData] = useState<ChartData[]>([]);
-  const [chartOptions, setChartOptions] = useState<ChartOptions>({} as ChartOptions);
+  const [chartOptions, setChartOptions] = useState<ApexOptions>({} as ApexOptions);
   const [chartSeries, setChartSeries] = useState<ChartSeries[]>([]);
   const [predictedFullGrown, setPredictedFullGrown] = useState<string>("");
   const [monthsDifferenceInfo, setMonthsDiffrenceInfo] = useState<string>("");

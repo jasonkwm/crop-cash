@@ -178,7 +178,7 @@ const ApplyLoan = () => {
                   accept=".pdf"
                   onChange={(e) => {
                     const file = e.target.files?.[0];
-                    setLandOwnership(file);
+                    setLandOwnership(file as File);
                   }}
                   className="block w-full text-sm text-gray-500
                     file:mr-4 file:py-2 file:px-4
