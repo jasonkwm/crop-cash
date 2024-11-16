@@ -31,6 +31,7 @@
     "spherical-geometry-js": "^3.0.2",
     "turf": "^3.0.14",
     "viem": "^2.21.45",
+    "vite-plugin-node-polyfills": "^0.22.0",
     "web3": "^4.15.0"
   },
   "devDependencies": {
