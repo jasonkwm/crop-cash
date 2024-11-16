@@ -392,36 +392,39 @@ export default function Chart() {
       <div className="w-full bg-white p-6 rounded-lg shadow-lg my-5">
         <h1 className="font-extrabold text-black text-4xl font-header">Crops Growth Graph</h1>
         <div className="grid grid-cols-12 gap-4 mt-8 text-black">
-          <div className="col-span-4 flex flex-col items-center justify-center bg-gray-100 rounded-lg p-4 h-full">
-            <h1 className="font-extrabold text-black text-4xl font-header my-3">Confidence Score</h1>
-            <ReactSpeedometer maxValue={100} value={confidenceValue} width={300} height={200} />
+          <div className="col-span-4 flex flex-col items-center justify-start bg-gray-100 rounded-lg p-4 h-full">
+            <h1 className="font-extrabold text-black text-4xl font-header mt-3">Confidence Score</h1>
 
-            {/* Conditional message based on the value */}
-            <p
-              className={`font-semibold text-xl ${
-                confidenceValue <= 20
-                  ? "text-red-500"
+            <div className="flex h-full justify-center items-center flex-col">
+              <ReactSpeedometer maxValue={100} value={confidenceValue} width={300} height={200} />
+
+              {/* Conditional message based on the value */}
+              <p
+                className={`font-semibold text-xl ${
+                  confidenceValue <= 20
+                    ? "text-red-500"
+                    : confidenceValue <= 40
+                    ? "text-red-600"
+                    : confidenceValue <= 60
+                    ? "text-yellow-500"
+                    : confidenceValue <= 80
+                    ? "text-green-500"
+                    : "text-green-700"
+                }`}
+              >
+                {confidenceValue <= 20
+                  ? "Very Bad"
                   : confidenceValue <= 40
-                  ? "text-red-600"
+                  ? "Bad"
                   : confidenceValue <= 60
-                  ? "text-yellow-500"
+                  ? "Moderate"
                   : confidenceValue <= 80
-                  ? "text-green-500"
-                  : "text-green-700"
-              }`}
-            >
-              {confidenceValue <= 20
-                ? "Very Bad"
-                : confidenceValue <= 40
-                ? "Bad"
-                : confidenceValue <= 60
-                ? "Moderate"
-                : confidenceValue <= 80
-                ? "Good"
-                : "Very Good"}
-            </p>
+                  ? "Good"
+                  : "Very Good"}
+              </p>
+            </div>
           </div>
-          <div className="col-span-4 flex flex-col items-start bg-gray-100 rounded-lg p-4">
+          <div className="col-span-4 flex flex-col items-start bg-gray-100 rounded-lg p-4 shadow-lg border-2 border-green-500">
             <div className="w-full space-y-2">
               <h1 className="font-extrabold text-black text-4xl font-header my-3 text-center">Funding</h1>
               <p>
@@ -438,73 +441,98 @@ export default function Chart() {
               <ProgressBar funded={raisedAmount} total={totalAmount} />
 
               {/* Input field for contribution amount */}
-              <p className="text-xs">Balance: ${usdcBalance}</p>
-              <input
-                type="number"
-                value={contributionAmount} // Bind the input value to contributionAmount
-                onChange={(e) => setContributionAmount(Number(e.target.value))} // Allow manual input
-                placeholder="Enter amount"
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
-              />
+              <div className="flex flex-row py-10">
+                <input
+                  type="text"
+                  value={`${contributionAmount}$`}
+                  onChange={(e) => setContributionAmount(Number(e.target.value.replace(/[^0-9]/g, "")))}
+                  placeholder="Enter custom amount ($)"
+                  className="appearance-none pt-3 pb-3 w-full text-center rounded-lg bg-transparent text-3xl font-extrabold mr-0 pr-0 focus:outline-none text-green-700"
+                />
+                {/* <span className="pr-3 pb-3 pt-3 text-black text-lg font-semibold">$</span> */}
+              </div>
 
               {/* Predefined buttons */}
               <div className="flex justify-between mt-4 gap-x-4">
                 <button
                   onClick={() => handleContributionClick(250)}
-                  className="w-1/3 p-2 bg-blue-500 text-white rounded-lg"
+                  className="w-1/3 p-2 bg-green-500 text-white rounded-lg"
                 >
                   250$
                 </button>
                 <button
                   onClick={() => handleContributionClick(500)}
-                  className="w-1/3 p-2 bg-blue-500 text-white rounded-lg"
+                  className="w-1/3 p-2 bg-green-500 text-white rounded-lg"
                 >
                   500$
                 </button>
                 <button
                   onClick={() => handleContributionClick(1000)}
-                  className="w-1/3 p-2 bg-blue-500 text-white rounded-lg"
+                  className="w-1/3 p-2 bg-green-500 text-white rounded-lg"
                 >
                   1000$
                 </button>
               </div>
 
               {/* Contribute button */}
-              <button className="w-full text-white bg-green-700 py-2 rounded" onClick={handleContribute}>
-                Contribute now!
-              </button>
+              <button className="w-full text-white bg-green-700 py-2 rounded">🚜 Fund Farmer!</button>
             </div>
           </div>
 
           <div className="col-span-4 flex flex-col items-start bg-gray-100 rounded-lg p-4">
-            <div className="w-full space-y-2">
-              <h1 className="font-extrabold text-black text-4xl font-header my-3 text-center">Field Info</h1>
+            <div className="w-full">
+              <h1 className="font-extrabold text-black text-4xl font-header mb-6 text-center">Farmer Info</h1>
 
-              <div className="space-y-2 w-full">
-                <p>
-                  <span className="font-semibold">KYC status:</span> verified ✅
-                </p>
-                <p>
-                  <span className="font-semibold">Attestation:</span>{" "}
-                  <a href="https://testnet-scan.sign.global/attestation/onchain_evm_534351_0x68">View</a>
-                </p>
-                <p>
-                  <span className="font-semibold">Location:</span> 🇲🇾
-                </p>
-                <p>
-                  <span className="font-semibold">Hectare:</span> {selectedLoan.fieldSize} Ha
-                </p>
-                <p>
-                  <span className="font-semibold">Avg. Harvests/Year:</span> {selectedLoan.avgHarvestPerYear}
-                </p>
-                <p>
-                  <span className="font-semibold">Avg. Time Between Harvests:</span>{" "}
-                  {selectedLoan.avgTimeBetweenHarvest} Months
-                </p>
-                <p>
-                  <span className="font-semibold">EST. next full Grown: </span> {predictedFullGrown} (in{" "}
-                  {monthsDifferenceInfo} months)
-                </p>
+              <div className="grid grid-cols-1 gap-4">
+                {/* Verification Box */}
+                <div className="bg-white rounded-lg p-4 shadow-sm">
+                  <h2 className="font-bold text-lg mb-2 text-gray-700">Verification</h2>
+                  <div className="space-y-2">
+                    <p>
+                      <span className="font-semibold">KYC status:</span> verified ✅
+                    </p>
+                    <p>
+                      <span className="font-semibold">Attestation:</span>{" "}
+                      <a
+                        href="https://testnet-scan.sign.global/attestation/onchain_evm_534351_0x68"
+                        className="text-blue-500 hover:text-blue-700"
+                      >
+                        View
+                      </a>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Field Details Box */}
+                <div className="bg-white rounded-lg p-4 shadow-sm">
+                  <h2 className="font-bold text-lg mb-2 text-gray-700">Field Details</h2>
+                  <div className="space-y-2">
+                    <p>
+                      <span className="font-semibold">Location:</span> <span className="font-5xl">🇲🇾</span>
+                    </p>
+                    <p>
+                      <span className="font-semibold">Size:</span> {selectedLoan.fieldSize} Ha
+                    </p>
+                  </div>
+                </div>
+
+                {/* Harvest Information Box */}
+                <div className="bg-white rounded-lg p-4 shadow-sm">
+                  <h2 className="font-bold text-lg mb-2 text-gray-700">Harvest Information</h2>
+                  <div className="space-y-2">
+                    <p>
+                      <span className="font-semibold">Avg. Harvests/Year:</span> {selectedLoan.avgHarvestPerYear}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Avg. Time Between Harvests:</span>{" "}
+                      {selectedLoan.avgTimeBetweenHarvest} Months
+                    </p>
+                    <p>
+                      <span className="font-semibold">EST. next full Grown: </span> {predictedFullGrown} (in{" "}
+                      {monthsDifferenceInfo} months)
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

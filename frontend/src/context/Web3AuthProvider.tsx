@@ -10,6 +10,7 @@ import { shouldSupportPasskey } from "../utils";
 import { AuthUserInfo } from "@web3auth/auth";
 import { ethers } from "ethers";
 import { BiconomySmartAccountV2, createPaymaster, createSmartAccountClient, IPaymaster } from "@biconomy/account";
+import { useGlobalState } from "./GlobalStateProvider";
 
 const clientId = "BMOtGZg6Gtzh3MbWIgs8EJzl5Ig-tSFaPkULxG3HKm2jpUVVrH4HudSraHzHl73dm64WJ3qiowXvW_0xoinv8wM";
 const verifier = "banana-google";
@@ -77,6 +78,7 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [smartWallet, setSmartWallet] = useState<BiconomySmartAccountV2>();
   const [smartWalletAddress, setSmartWalletAddress] = useState("");
+  const { setKycDone } = useGlobalState();
 
   useEffect(() => {
     const init = async () => {
@@ -118,6 +120,7 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
           setUserBalance("");
           setSmartWallet(undefined);
           setSmartWalletAddress("");
+          setKycDone(false);
         });
         await web3authSfa.init();
         setWeb3authSFAuth(web3authSfa);

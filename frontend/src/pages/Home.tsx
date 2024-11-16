@@ -7,7 +7,7 @@ import { useGlobalState } from "../context/GlobalStateProvider";
 export default function Home() {
   // const { employee, setEmployee } = useGlobalState();
   const { isSwitchOn } = useGlobalState();
-  return isSwitchOn ? <FarmerDashboard /> : <InvestorDashboard />;
+  return isSwitchOn ? <InvestorDashboard /> : <FarmerDashboard />;
 }
 
 // const loginView = () => {

@@ -8,7 +8,7 @@ const Navbar = () => {
   const shortenAddress = (address: string): string => `${address.slice(0, 6)}...${address.slice(-4)}`;
 
   return (
-    <nav className="bg-gray-800 text-white px-16 py-3 flex justify-between items-center mt-0">
+    <nav className="bg-[#01546b] text-white px-16 py-3 flex justify-between items-center shadow-lg">
       {/* Home Icon */}
       <div className="flex items-center space-x-2">
         <a href="/" className="text-lg font-bold hover:text-gray-300 p-2">
@@ -23,7 +23,7 @@ const Navbar = () => {
             <button
               onClick={toggleSwitch}
               className={`w-8 h-4 flex items-center rounded-full ${
-                isSwitchOn ? "bg-green-500" : "bg-ourYellow"
+                isSwitchOn ? "bg-ourGreen hover:bg-ourGreenDark" : "bg-ourYellow"
               } relative`}
             >
               <div
@@ -51,8 +51,8 @@ const Navbar = () => {
           </>
         ) : (
           <button
+            className="text-black bg-ourGreen hover:bg-ourGreenDark px-10 py-2 rounded text-lg font-bold font-normal tracking-wider transition-all"
             onClick={loginWithPasskey}
-            className="bg-primary hover:bg-primaryLight px-10 py-2 rounded text-lg font-bold font-normal tracking-wider transition-all"
           >
             Login
           </button>

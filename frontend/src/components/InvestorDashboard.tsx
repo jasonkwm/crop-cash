@@ -57,8 +57,8 @@ export default function InvestorDashboard() {
   return (
     <div className="max-w-2xl mx-auto mt-8 w-[90%] bg-white p-6 rounded">
       <div className="flex justify-between">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">Investors Dashboard</h1>
-        {isSwitchOn && (
+        <h1 className="text-2xl font-bold text-gray-800 mb-6">Loan Applications</h1>
+        {!isSwitchOn && (
           <a href="/apply-loan" className="text-black hover:text-black">
             <button className="bg-blue-400">Apply Loan</button>
           </a>
@@ -84,7 +84,7 @@ export default function InvestorDashboard() {
             </div>
             <div className="flex flex-col gap-2">
               <button
-                className="bg-green-400 text-black"
+                className="bg-ourGreen hover:bg-ourGreenDark text-black"
                 onClick={() => {
                   setSelectedLoan(fData);
                   navigate("/chart");

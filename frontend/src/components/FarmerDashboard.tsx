@@ -44,7 +44,7 @@ export default function FarmerDashboard() {
   const farmerNfts = getFarmerNfts(smartWalletAddress);
   const nftsDetails = getFarmerNftDetails();
   const loanInitialized = getLoanInitializeds(smartWalletAddress);
-  const { farmersData, setFarmersData } = useGlobalState();
+  const { farmersData, setFarmersData, kycDone, handleOpenModal, setKycDone } = useGlobalState();
 
   useEffect(() => {
     let farmerLands = [];
@@ -67,7 +67,9 @@ export default function FarmerDashboard() {
           avgTimeBetweenHarvest: 6,
         });
       }
+      if (farmerLands.length > 0) setKycDone(true);
       if (farmerLands.length === farmersData.length) return;
+
       setFarmersData(farmerLands);
     }
   }, [farmerNfts, nftsDetails, loanInitialized]);
@@ -76,9 +78,16 @@ export default function FarmerDashboard() {
     <div className="max-w-2xl mx-auto mt-8 w-[90%] bg-white p-6 rounded">
       <div className="flex justify-between">
         <h1 className="text-2xl font-bold text-gray-800 mb-6">Farmers Dashboard</h1>
-        <a href="/apply-loan" className="text-black hover:text-black">
-          <button className="bg-blue-400">Apply Loan</button>
-        </a>
+
+        {kycDone ? (
+          <a href="/apply-loan" className="text-black hover:text-black">
+            <button className="bg-blue-400 hover:bg-blue-500 transition-all">Apply Loan</button>
+          </a>
+        ) : (
+          <button className="bg-ourGreen hover:bg-ourGreenDark text-black" onClick={handleOpenModal}>
+            KYC to apply loan
+          </button>
+        )}
       </div>
       {farmersData.map((fData: any, index: any) => (
         <div key={index} className="bg-[#F8F8F8] shadow-md rounded-md p-4 mb-4">
@@ -100,7 +109,7 @@ export default function FarmerDashboard() {
             </div>
             <div className="flex flex-col gap-2">
               <button className="bg-ourYellow text-black">Repay</button>
-              <button className="bg-green-400 text-black">Claim</button>
+              <button className="bg-ourGreen hover:bg-ourGreenDark text-black">Claim</button>
             </div>
           </div>
           <ProgressBar funded={Number(fData.funded)} total={Number(fData.askingLoan)} />
