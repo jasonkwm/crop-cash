@@ -139,7 +139,6 @@ const ApplyLoan = () => {
     }, 1000);
 
     await applyLoan(Number(attestionId), loanAmount);
-
     navigate("/");
   };
 

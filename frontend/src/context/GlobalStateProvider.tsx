@@ -5,7 +5,7 @@ import { createContext, useContext, useState } from "react";
 //   setEmployee: (value: any) => void;
 // };
 
-const cropData = [
+export const cropData = [
   {
     cropType: "🍚 Rice",
     tonPerHectare: 4,

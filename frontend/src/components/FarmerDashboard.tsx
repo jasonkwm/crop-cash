@@ -48,9 +48,6 @@ export default function FarmerDashboard() {
 
   useEffect(() => {
     let farmerLands = [];
-    console.log("farmersData.length", farmersData.length);
-    if (farmersData.length !== 0) return;
-    console.log("here");
     if (farmerNfts.data && nftsDetails.data && loanInitialized.data) {
       for (let transfer of (farmerNfts.data as any).transfers) {
         const foundDetails = (nftsDetails.data as any).landObjectUpdateds.find(
@@ -71,10 +68,10 @@ export default function FarmerDashboard() {
           avgTimeBetweenHarvest: Math.floor(12 / harvestPerYear),
         });
       }
-      console.log("farmerLands", farmerLands);
+      if (farmerLands.length === farmersData.length) return;
       setFarmersData(farmerLands);
     }
-  }, [nftsDetails, farmerNfts]);
+  }, [farmerNfts, nftsDetails, loanInitialized]);
 
   return (
     <div className="max-w-2xl mx-auto mt-8 w-[90%] bg-white p-6 rounded">

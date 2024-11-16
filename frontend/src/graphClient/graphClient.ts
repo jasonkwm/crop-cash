@@ -1,4 +1,3 @@
-import { BiconomySmartAccountV2 } from "@biconomy/account";
 import { useQuery } from "@tanstack/react-query";
 import request, { gql } from "graphql-request";
 
