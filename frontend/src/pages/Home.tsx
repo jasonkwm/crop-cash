@@ -1,5 +1,6 @@
 // import { useGlobalState } from "../context/GlobalStateProvider";
 import FarmerDashboard from "../components/FarmerDashboard";
+import InvestorDashboard from "../components/InvestorDashboard";
 import { useGlobalState } from "../context/GlobalStateProvider";
 import { useWeb3Auth } from "../context/Web3AuthProvider";
 import { useSignAttestation } from "../hooks/useSignAttestation";
@@ -34,5 +35,5 @@ export default function Home() {
       </div>
     </>
   );
-  return <FarmerDashboard />;
+  return isSwitchOn ? <FarmerDashboard /> : <InvestorDashboard />;
 }
