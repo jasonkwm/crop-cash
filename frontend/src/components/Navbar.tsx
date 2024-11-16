@@ -1,19 +1,20 @@
 import { useWeb3Auth } from "../context/Web3AuthProvider";
 import { useGlobalState } from "../context/GlobalStateProvider";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { isSwitchOn, toggleSwitch } = useGlobalState();
   const { logout, smartWalletAddress, provider, loginWithPasskey, userInfo, registerPasskey } = useWeb3Auth();
-
+  const navigate = useNavigate();
   const shortenAddress = (address: string): string => `${address.slice(0, 6)}...${address.slice(-4)}`;
 
   return (
     <nav className="bg-[#01546b] text-white px-16 py-3 flex justify-between items-center shadow-lg">
       {/* Home Icon */}
       <div className="flex items-center space-x-2">
-        <a href="/" className="text-lg font-bold hover:text-gray-300 p-2">
-          <img src="/home-2.png" width={48} height={48} />
-        </a>
+        <button onClick={() => navigate("/")} className="text-lg font-bold hover:text-gray-300 p-2">
+          <img src="/earth.gif" width={48} height={48} />
+        </button>
       </div>
 
       {/* Right Section */}
@@ -33,7 +34,7 @@ const Navbar = () => {
               />
             </button>
             <span
-              className="text-sm font-mono bg-gray-700 px-10 py-2 md:px-4 rounded"
+              className="text-sm font-mono bg-gray-700 px-10 py-2 md:px-4 rounded font-normal"
               onClick={() => {
                 navigator.clipboard.writeText(smartWalletAddress);
                 alert("Address copied!");

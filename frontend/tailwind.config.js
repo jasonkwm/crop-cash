@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        header: ['"Luckiest Guy"', "cursive"],
-        normal: ['"Fredoka"', "sans-serif"],
+        header: ['"Londrina Solid"', "cursive"],
+        normal: ['"Londrina Solid"', "sans-serif"],
       },
       colors: {
         background: "#EBEBEB", // Main background color

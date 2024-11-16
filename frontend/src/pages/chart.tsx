@@ -109,6 +109,7 @@ export default function Chart() {
   console.log({ numberOfContributors });
 
   console.log("selectedLoan", selectedLoan);
+  console.log("usdcBalance", usdcBalance);
 
   const { mintUSDC } = useMintUSDC();
   const { contribute } = useContribute();
@@ -153,6 +154,7 @@ export default function Chart() {
     setUsdcBalance(Number(data));
     setRaisedAmount((prev: number) => prev + contributionAmount);
   };
+  handleContribute;
 
   const totalAmount = selectedLoan.askingLoan;
   // const contributors = 69;
