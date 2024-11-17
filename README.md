@@ -1,6 +1,7 @@
 # CROP CASH
 
-Deployed version: [CropCash](https://crop-cash.vercel.app/)
+**Deployed version**: [CropCash](https://crop-cash.vercel.app/)  
+**Slides**: [Canva](https://www.canva.com/design/DAGWpoBCGns/VjbLtJHnluaKC42oSMMLoQ/view?utm_content=DAGWpoBCGns&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 
 ## Contract Deployed:
 
