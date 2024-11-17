@@ -32,7 +32,7 @@ Deployed version: [CropCash](https://crop-cash.vercel.app/)
 ### CropCash Schema Hook
 
 -   **Address**: 0x8A2C0ECf306878a6BE5968c0188D4B1Fe23Da7a2
--   **Link**: https://sepolia.scrollscan.com/address/0x8A2C0ECf306878a6BE5968c0188D4B1Fe23Da7a2
+-   **Link**: [scrollscan](https://sepolia.scrollscan.com/address/0x8A2C0ECf306878a6BE5968c0188D4B1Fe23Da7a2)
 
 **CropCash** is designed to bridge the financial gap for hardworking farmers who face challenges securing loans before their crops are harvested. We combine technology and community support to ensure farmers get the financial backing they need when they need it most.
 
