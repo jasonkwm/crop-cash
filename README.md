@@ -1,5 +1,39 @@
 # CROP CASH
 
+Deployed version: [CropCash](https://crop-cash.vercel.app/)
+
+## Contract Deployed:
+
+### CropCashOracle
+
+-   **Address**: 0x4466B04eb45b3BDba1EF11036f5fb575dFe4bFFa
+-   **Link**: [scrollscan](https://sepolia.scrollscan.com/address/0x4466B04eb45b3BDba1EF11036f5fb575dFe4bFFa)
+
+### CropCashConsumer
+
+-   **Address**: 0xC126DB3B0B81aDbF352F2a66D6ceE7Cc0C1AC9BA
+-   **Link**: [scrollscan](https://sepolia.scrollscan.com/address/0xC126DB3B0B81aDbF352F2a66D6ceE7Cc0C1AC9BA#code)
+
+### CropCashLandNFT
+
+-   **Address**: 0xB626B365f5EF1691B26227B3A8C0Ee24361c0A17
+-   **Link**: [scrollscan](https://sepolia.scrollscan.com/address/0xB626B365f5EF1691B26227B3A8C0Ee24361c0A17)
+
+### CropCashUSDC
+
+-   **Address**: 0xE10cEd24353325fD5C8dc5EFEbb25CAA0Ae564C2
+-   **Link**: [scrollscan](https://sepolia.scrollscan.com/address/0xE10cEd24353325fD5C8dc5EFEbb25CAA0Ae564C2#code)
+
+### CropCashFund
+
+-   **Address**: 0xDBfb6CF2836Fa0c84F9a6741697EeEbe10Cd9726
+-   **Link**: [scrollscan](https://sepolia.scrollscan.com/address/0xDBfb6CF2836Fa0c84F9a6741697EeEbe10Cd9726#code)
+
+### CropCash Schema Hook
+
+-   **Address**: 0x8A2C0ECf306878a6BE5968c0188D4B1Fe23Da7a2
+-   **Link**: https://sepolia.scrollscan.com/address/0x8A2C0ECf306878a6BE5968c0188D4B1Fe23Da7a2
+
 **CropCash** is designed to bridge the financial gap for hardworking farmers who face challenges securing loans before their crops are harvested. We combine technology and community support to ensure farmers get the financial backing they need when they need it most.
 
 By leveraging satellite data to analyze harvest cycles, estimate potential yields, and assess a farmer’s consistency. Based on this data, farmers can apply for loans proportional to the expected value of their crops.
